@@ -1,0 +1,47 @@
+<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141421"/>
+      <stop offset="100%" stop-color="#1f2034"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="160" cy="160" r="150" fill="url(#bgGradient)"/>
+
+  <!-- Subtle grid lines (data feel) -->
+  <g opacity="0.12" stroke="#ffffff" stroke-width="1">
+    <line x1="60" y1="90" x2="260" y2="90"/>
+    <line x1="60" y1="140" x2="260" y2="140"/>
+    <line x1="60" y1="190" x2="260" y2="190"/>
+    <line x1="60" y1="240" x2="260" y2="240"/>
+
+    <line x1="90" y1="70" x2="90" y2="260"/>
+    <line x1="140" y1="70" x2="140" y2="260"/>
+    <line x1="190" y1="70" x2="190" y2="260"/>
+    <line x1="240" y1="70" x2="240" y2="260"/>
+  </g>
+
+  <!-- PB monogram -->
+  <g transform="translate(80, 95)">
+    <!-- P -->
+    <path
+      d="M 10 120 L 10 0 L 55 0 Q 85 0 85 35 Q 85 70 55 70 L 30 70 L 30 120 Z"
+      fill="#f5f5f5"/>
+    
+    <!-- B -->
+    <path
+      d="M 105 120 L 105 0 L 150 0 Q 185 0 185 32 Q 185 55 168 65 Q 190 75 190 100 Q 190 132 155 132 L 105 132 Z
+         M 125 55 L 148 55 Q 165 55 165 36 Q 165 18 148 18 L 125 18 Z
+         M 125 110 L 152 110 Q 170 110 170 94 Q 170 78 152 78 L 125 78 Z"
+      fill="#f5f5f5"/>
+  </g>
+
+  <!-- Mini bar chart at bottom (data hint) -->
+  <g transform="translate(90, 215)" fill="#E8A8A8">
+    <rect x="0" y="30" width="20" height="35" rx="3"/>
+    <rect x="35" y="15" width="20" height="50" rx="3"/>
+    <rect x="70" y="5" width="20" height="60" rx="3"/>
+    <rect x="105" y="20" width="20" height="45" rx="3"/>
+  </g>
+</svg>

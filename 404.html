@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ====== BASIC PAGE INFO ====== -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | PetraB Portfolio</title>
+
+  <meta name="description" content="The page you are looking for could not be found on Petra Biney's data analytics portfolio.">
+  <meta name="keywords" content="404, page not found, Petra Biney, data analyst">
+
+  <!-- ====== FAVICONS ====== -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- ====== FONTS ====== -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- ====== VENDOR CSS ====== -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- ====== MAIN SITE CSS ====== -->
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+
+<body class="page-404">
+
+  <!-- =================== HEADER (Same branding as main site) =================== -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center">
+
+      <!-- Logo / Name -->
+      <a href="index.html#hero" class="logo d-flex align-items-center me-auto">
+        <img src="assets/img/svg" alt="PetraB logo" class="logo-img">
+        <h1 class="sitename">PetraB</h1>
+      </a>
+
+      <!-- Simple Nav back into the one-page sections -->
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html#hero">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#education-skills">Education &amp; Skills</a></li>
+          <li><a href="index.html#projects">Projects</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- =================== MAIN CONTENT =================== -->
+  <main class="main">
+
+    <!-- ====== 404 SECTION: what the user actually sees ====== -->
+    <section id="error-404" class="error-404 section">
+      <div class="container d-flex flex-column align-items-center justify-content-center text-center">
+
+        <!-- Big 404 code -->
+        <div class="error-code mb-3">
+          <span>4</span><span>0</span><span>4</span>
+        </div>
+
+        <!-- Main title explaining the problem -->
+        <h1 class="mb-2">Page not found</h1>
+
+        <!-- Short explanation / context -->
+        <p class="mb-4">
+          The page you tried to reach doesn’t exist or has been moved.<br>
+          Let’s get you back to something useful.
+        </p>
+
+        <!-- Clear actions with labels -->
+        <div class="d-flex gap-3 justify-content-center">
+          <a href="index.html#hero" class="btn-getstarted">
+            <i class="bi bi-house-door me-1"></i>
+            <span>Back to Home</span>
+          </a>
+          <a href="index.html#projects" class="btn-getstarted btn-secondary">
+            <i class="bi bi-bar-chart-line me-1"></i>
+            <span>View Projects</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =================== FOOTER =================== -->
+  <footer id="footer" class="footer">
+    <div class="container text-center">
+      <p>
+        © <span id="year"></span>
+        <strong class="sitename">PetraB</strong>.
+        All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scroll Top Button -->
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+  <!-- =================== SCRIPTS =================== -->
+  <!-- Vendor JS -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Dynamic year in footer -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
