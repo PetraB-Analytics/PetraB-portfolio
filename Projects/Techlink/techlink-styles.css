@@ -1,0 +1,344 @@
+/* =========================
+   RESET
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =========================
+   BODY
+========================= */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #1a1a2e;
+    background-color: #f5f7fa;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.case-study-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+
+/* =========================
+   HERO
+========================= */
+.case-hero {
+    background: #5a4a3a;
+    color: #fdfcf0;
+    padding: 40px 80px;
+    text-align: center;
+}
+
+.case-label {
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #64ffda;
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.case-hero h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.3;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #fdfcf0;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+.case-section {
+    padding: 36px 80px;
+    border-bottom: 1px solid #e8ecf0;
+    margin-bottom: 0;
+}
+
+.case-section > * {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.case-section > .dashboard-container {
+    max-width: 100%;
+}
+
+.case-section:first-of-type {
+    padding-top: 48px;
+}
+
+/* Keep your preferred hover */
+.case-section:hover {
+    background: #ffffff;
+    transition: background 0.2s ease;
+}
+
+/* =========================
+   FINAL SECTION (FIXED)
+========================= */
+.final-section {
+    border-bottom: none;
+    background: #f8fafc;
+    padding-bottom: 60px;
+    border-top: 1px solid #e5e7eb;
+    margin-bottom: 0;
+}
+
+.final-section p {
+    max-width: 700px;
+    margin-bottom: 14px;
+}
+
+.final-section h2 {
+    color: #0a192f;
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+h2 {
+    font-size: 32px;
+    font-weight: 600;
+    color: #0a192f;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+    border-left: 4px solid #64ffda;
+    padding-left: 20px;
+}
+
+h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1e3a5f;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 18px;
+    color: #334155;
+    margin-bottom: 14px;
+    line-height: 1.7;
+}
+
+/* TAKEAWAY TEXT */
+.takeaway-text {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #334155;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.takeaway-text:last-child {
+    margin-bottom: 0;
+}
+
+/* =========================
+   LISTS (TIGHTENED)
+========================= */
+ul {
+    margin: 12px 0 12px 30px;
+}
+
+li {
+    font-size: 17px;
+    color: #334155;
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+li strong {
+    color: #0a192f;
+    font-weight: 600;
+}
+
+.case-section ul li strong {
+    color: #1e3a5f;
+    border-bottom: 1px solid #64ffda;
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
+/* =========================
+   CODE
+========================= */
+code {
+    background: #eef2ff;
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-family: 'Courier New', 'SF Mono', monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e40af;
+    display: inline-block;
+    border: 1px solid #bfdbfe;
+}
+
+code:hover {
+    background: #dbeafe;
+    transform: scale(1.02);
+    transition: all 0.2s ease;
+}
+
+/* =========================
+   DASHBOARD
+========================= */
+.dashboard-showcase {
+    background: #f8fafc;
+}
+
+.dashboard-container {
+    max-width: 100%;
+    margin: 20px auto 0;
+}
+
+.dashboard-frame {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 18px;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+    transition: 0.25s ease;
+}
+
+.dashboard-frame:hover {
+    transform: translateY(-3px);
+}
+
+.dashboard-frame iframe {
+    width: 100%;
+    height: 495px;
+    border: none;
+    border-radius: 0 0 12px 12px;
+    background: #ffffff;
+}
+
+.dashboard-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.dashboard-btn {
+    padding: 12px 18px;
+    background: #0a192f;
+    color: #64ffda;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.dashboard-btn:hover {
+    background: #112240;
+    transform: translateY(-2px);
+}
+
+.dashboard-btn.secondary {
+    background: transparent;
+    color: #0a192f;
+    border: 1px solid #0a192f;
+}
+
+.dashboard-btn.secondary:hover {
+    background: #0a192f;
+    color: #64ffda;
+}
+
+/* =========================
+   PDF LABEL + HINT
+========================= */
+.pdf-label {
+    background: #f8fafc;
+    padding: 10px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #0a192f;
+    letter-spacing: 0.6px;
+    border-bottom: 1px solid #e5e7eb;
+    border-radius: 12px 12px 0 0;
+}
+
+.pdf-hint {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    .case-hero {
+        padding: 30px 24px;
+    }
+
+    .case-hero h1 {
+        font-size: 28px;
+    }
+
+    .case-section {
+        padding: 32px 24px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    p, li {
+        font-size: 16px;
+    }
+
+    ul {
+        margin-left: 20px;
+    }
+
+    .dashboard-frame iframe {
+        height: 520px;
+    }
+
+    .dashboard-actions {
+        flex-direction: column;
+    }
+
+    .dashboard-btn {
+        text-align: center;
+    }
+}
+
+/* =========================
+   PRINT
+========================= */
+@media print {
+    body {
+        background: white;
+    }
+
+    .case-study-page {
+        box-shadow: none;
+        max-width: 100%;
+    }
+}
+
+

@@ -1504,3 +1504,41 @@ section {
 #contact {
   scroll-margin-top: 80px;
 }
+
+
+/* Thumbnail image styling */
+.thumb-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.project-thumb {
+  position: relative;
+  height: 140px;
+  overflow: hidden;
+}
+
+/* Keep label above the image */
+.thumb-label {
+  position: relative;
+  z-index: 2;
+}
+
+
+
+/* 3CX Card */
+.tool-3cx .tool-icon {
+  background: #0f5f9e;
+  color: white;
+}
+
+.tool-3cx:hover .tool-icon {
+  transform: scale(1.05);
+  background: #0a4a7a;
+}

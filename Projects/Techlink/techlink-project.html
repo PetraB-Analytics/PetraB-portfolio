@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TechLink Case Study</title>
+
+  <!-- LINK YOUR CSS HERE -->
+  <link rel="stylesheet" href="techlink-styles.css">
+
+</head>
+
+<body>
+
+  <!-- HERO -->
+  <section class="case-hero">
+    <p class="case-label">TechLink Consulting</p>
+    <h1>Delivery Risk &amp; Client Retention Analysis (Excel and Power BI)</h1>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="case-section">
+    <h2>Overview</h2>
+    <p>
+      TechLink’s rapid growth is now straining delivery execution and threatening future revenue.
+      Although high‑level delivery indicators remain positive, closer review shows clear pressure points:
+      more projects nearing deadline risk, delivery delays concentrated in specific services and regions,
+      and declining repeat client engagement.
+      These issues are already weakening delivery reliability and client retention in measurable ways.
+    </p>
+    <p>
+      This analysis examines project‑level delivery data to pinpoint where execution risk is emerging,
+      how backlog pressure is building, and how sustained delays reduce client re‑engagement.
+      By tracking how work progresses over time and where pressure accumulates,
+      it connects delivery performance directly to client continuity and revenue risk.
+    </p>
+  </section>
+
+  <!-- BUSINESS CONTEXT -->
+  <section class="case-section">
+    <h2>Business Context</h2>
+    <p>TechLink Consulting delivers project‑based technology services across:</p>
+    <ul>
+      <li>Infrastructure &amp; Cloud</li>
+      <li>Software Development</li>
+      <li>Data &amp; Analytics</li>
+      <li>Security &amp; Compliance</li>
+      <li>IT Support</li>
+    </ul>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="case-section">
+    <h2>The Problem</h2>
+    <p>
+      Leadership relied on completed outcomes, such as on‑time delivery rates,
+      which obscured risks emerging within active projects.
+      As a result, delivery issues were often identified too late to prevent escalation.
+    </p>
+    <ul>
+      <li>
+        <strong>Limited visibility into delivery risk</strong><br>
+        Delays were concentrated in specific services and regions, but existing reporting failed
+        to surface these hotspots early enough to intervene.
+      </li>
+      <li>
+        <strong>Project status masked execution pressure</strong><br>
+        “In Progress” status provided little insight into whether work was truly on track
+        or quietly slipping behind.
+      </li>
+      <li>
+        <strong>Retention risk was difficult to anticipate</strong><br>
+        Client satisfaction was measured, but its connection to delivery performance
+        and repeat engagement was unclear.
+      </li>
+      <li>
+        <strong>Intervention was reactive rather than proactive</strong><br>
+        Without a unified view of delivery risk, service performance, and revenue exposure,
+        action often occurred only after delays had already escalated.
+      </li>
+    </ul>
+    <p>
+      The result was a decision gap that increased operational risk
+      and threatened long‑term client value.
+    </p>
+  </section>
+
+  <!-- ANALYTICAL APPROACH -->
+  <section class="case-section">
+    <h2>Analytical Approach</h2>
+    <p>
+      The analysis was designed to move beyond static outcome reporting
+      and focus on active execution behavior, where risk first appears.
+      Key steps included:
+    </p>
+    <ul>
+      <li>Structuring the dataset at the project level to track full lifecycle performance</li>
+      <li>Reconstructing client engagement history to accurately capture repeat behavior</li>
+      <li>Developing time‑based risk indicators such as project age and deadline proximity</li>
+      <li>Evaluating performance through both historical outcomes and active risk signals</li>
+      <li>Segmenting results by service line, region, and client to identify concentration of risk</li>
+    </ul>
+    <p>
+      The final output was an interactive Power BI dashboard supported by structured Excel analysis,
+      enabling leadership to identify pressure early and act decisively.
+    </p>
+  </section>
+
+  <!-- DATA PREPARATION -->
+  <section class="case-section">
+    <h2>Data Preparation &amp; Feature Engineering</h2>
+
+    <h3>Data Preparation in Excel</h3>
+    <p>
+      Data preparation was conducted in Excel to clean, validate,
+      and structure the dataset for reliable analysis.
+    </p>
+    <ul>
+      <li>Standardized date fields to ensure valid project timelines and accurate time‑based analysis</li>
+      <li>Cleaned and normalized categorical fields for consistency</li>
+      <li>Identified and resolved missing values, outliers, and anomalies</li>
+      <li>Applied data validation rules to detect incomplete or invalid records</li>
+      <li>Built logical checks using <code>IF()</code> and <code>IF(AND())</code> to flag incorrect timelines</li>
+      <li>Removed duplicate records using <code>COUNTIF()</code> and conditional checks</li>
+      <li>Cross‑validated totals and aggregates using <code>SUMIF()</code></li>
+      <li>Aligned related data across tables using <code>XLOOKUP()</code></li>
+      <li>Structured analysis‑ready tables for <code>Power BI integration</code></li>
+    </ul>
+
+    <h3>Feature Engineering</h3>
+    <ul>
+      <li><strong>Active Project Age</strong> – elapsed time for ongoing work</li>
+      <li><strong>Deadline Urgency Signals</strong> – combined time elapsed with time remaining</li>
+      <li><strong>Aging Buckets</strong> – 0–90, 91–180, 181–270, 270+ days</li>
+      <li><strong>Rule‑Based Delivery Stages</strong> – replaced unreliable status labels with: On Track, Due Soon, Overdue, Completed On Time/Late</li>
+      <li><strong>Delivery Variance</strong> – quantified delays relative to planned timelines</li>
+      <li><strong>Repeat Client Indicator</strong> – rebuilt using actual client history</li>
+      <li><strong>Service & Region Segmentation</strong> – enabled hotspot detection</li>
+    </ul>
+  </section>
+
+<!-- DASHBOARD SECTION (Google Drive Embed) -->
+<section class="case-section dashboard-showcase">
+  <h2>Dashboard: Interactive Power BI Dashboard</h2>
+
+  <div class="dashboard-container">
+    <div class="dashboard-frame">
+      <div class="pdf-label">
+        Dashboard Report — Delivery Risk & Client Retention Analysis
+      </div>
+<!-- === UPDATED GOOGLE DRIVE IFRAME === -->
+      <iframe 
+        src="https://drive.google.com/file/d/1NXIQVGbdSS0982PQDDnzLLREJbbEaHiT/preview"
+        width="100%" 
+        height="495"
+        style="border: none; border-radius: 0 0 12px 12px;background: #ffffff;">
+      </iframe>
+
+      <div class="dashboard-actions">
+        <a href="https://drive.google.com/file/d/1NXIQVGbdSS0982PQDDnzLLREJbbEaHiT/view?usp=sharing" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="dashboard-btn">
+          Open Full Report →
+        </a>
+<!-- Link to Live Power BI Dashboard (requires sign-in) -->
+        <a href="https://app.powerbi.com/links/vl7dl7Awx4?ctid=bd697c1b-c481-479c-841e-c618542675c3&pbi_source=linkShare" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="dashboard-btn secondary">
+          View Live Dashboard →
+        </a>
+
+        <span class="pdf-hint">
+          <i class="bi bi-mouse"></i> Scroll to view full dashboard
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- KEY INSIGHTS -->
+  <section class="case-section">
+    <h2>Key Insights</h2>
+    <ul>
+      <li>
+        <strong>Execution risk is rising beneath the surface</strong><br>
+        While on‑time delivery remains relatively stable, a growing share of active projects
+        is under deadline pressure, indicating risk is building before failures become visible.
+      </li>
+      <li>
+        <strong>Delays are becoming structural, not temporary</strong><br>
+        A large proportion of open work sits in long‑running aging buckets
+        (180+ and 270+ days), pointing to persistent bottlenecks rather than short‑term slippage.
+      </li>
+      <li>
+        <strong>Backlog is growing faster than completion capacity</strong><br>
+        Project intake consistently outpaces completion,
+        leading to rising work‑in‑progress and increased execution pressure.
+      </li>
+      <li>
+        <strong>Risk and revenue exposure are highly concentrated</strong><br>
+        Delivery risk is clustered in a small number of services and regions,
+        meaning targeted intervention has far greater impact than broad fixes.
+      </li>
+      <li>
+        <strong>Delays weaken future client engagement</strong><br>
+        Projects that remain overdue for extended periods
+        show lower repeat engagement, reinforcing the link between delivery performance
+        and long‑term client value.
+      </li>
+      <li>
+        <strong>Financial exposure clarifies priorities</strong><br>
+        Framing delivery issues in terms of revenue at risk
+        highlights urgency more effectively than project counts alone.
+      </li>
+    </ul>
+    <p>
+      <strong>Overall insight:</strong> delivery outcomes can appear stable while execution pressure,
+      backlog, and revenue risk quietly build underneath.
+      Without early visibility and targeted intervention,
+      these pressures compound and affect both operations and client retention.
+    </p>
+  </section>
+  <!-- RECOMMENDATIONS -->
+  <section class="case-section">
+    <h2>Recommendations</h2>
+    <ul>
+      <li>
+        <strong>Intervene earlier using active risk indicators</strong><br>
+        Shift focus from completed outcomes to project age,
+        deadline proximity, and delivery stage while recovery is still possible.
+      </li>
+      <li>
+        <strong>Target high‑impact service–region hotspots</strong><br>
+        Concentrate corrective action where risk and revenue exposure are most concentrated.
+      </li>
+      <li>
+        <strong>Break structural delays</strong><br>
+        Require mandatory review and escalation for projects exceeding aging thresholds
+        (e.g., 180+ days).
+      </li>
+      <li>
+        <strong>Align intake with delivery capacity</strong><br>
+        Adjust resourcing, prioritization, or intake pacing
+        when backlog growth outpaces completion.
+      </li>
+      <li>
+        <strong>Treat delivery delays as a retention risk</strong><br>
+        Proactively engage clients when projects fall behind
+        to preserve trust and future engagement.
+      </li>
+      <li>
+        <strong>Use revenue‑at‑risk to guide decisions</strong><br>
+        Frame delivery risk financially to focus leadership attention
+        on the most consequential issues.
+      </li>
+    </ul>
+    <p>
+      <strong>Bottom line:</strong>
+      Delivery performance is holding today, but execution pressure is rising.
+      Without early intervention in high‑impact areas,
+      delivery risk will continue to compound and threaten long‑term sustainability.
+    </p>
+  </section>
+
+  <!-- LEARNINGS -->
+  <section class="case-section final-section">
+    <h2>What I Learned &amp; Why It Matters</h2>
+    <ul>
+      <li>
+        <strong>Backlog is a system signal, not just delayed work</strong><br>
+        Aging patterns revealed structural bottlenecks,
+        not isolated delivery issues.
+      </li>
+      <li>
+        <strong>Early signals matter more than final outcomes</strong><br>
+        Stable on‑time delivery can hide growing execution pressure.
+        Monitoring active work surfaces risk earlier.
+      </li>
+      <li>
+        <strong>Benchmarks provide context, not conclusions</strong><br>
+        Using elapsed time and urgency avoided false alarms
+        caused by rigid threshold comparisons.
+      </li>
+      <li>
+        <strong>Design should be driven by decisions, not visuals</strong><br>
+        Removing metrics that didn’t support action
+        improved clarity and decision focus.
+      </li>
+      <li>
+        <strong>Financial framing drives better decisions</strong><br>
+        Expressing delivery issues as revenue at risk
+        proved more effective than counts or percentages alone.
+      </li>
+    </ul>
+  </section>
+
+<section class="case-section final-section">
+  <h2>Final Takeaway</h2>
+
+  <p class="takeaway-text">
+    Delivery risk does not emerge at the point of failure, but much earlier.
+    It builds through how work accumulates, ages, and competes for limited capacity.
+    By reframing delivery monitoring around active execution signals rather than completed outcomes, 
+    risk becomes visible while intervention is still possible.
+  </p>
+  <p class="takeaway-text">
+    Operational data is most valuable when it supports prioritization. 
+    Translating delays into execution pressure and revenue exposure creates a clearer basis 
+    for deciding where to intervene, what to fix first, and which risks can no longer be ignored.
+  </p>
+
+  <!-- BACK BUTTON -->
+<div class="back-container">
+  <a href="  ../../index.html#projects" class="case-back-btn">
+    ← Back to Projects
+  </a>
+</div>
+</section>
+
+</main>
+
+</body>
+</html>
