@@ -1420,12 +1420,11 @@ section {
   /* Keep hero full height, but move content lower on mobile */
 
 .hero {
-  min-height: 82vh;
+  min-height: auto;
   padding-top: 105px;
-  padding-bottom: 45px;
+  padding-bottom: 55px;
   align-items: center;
 }
-
 
 .hero .social-links {
   margin-top: 24px;
