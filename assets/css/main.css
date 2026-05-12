@@ -276,108 +276,143 @@ section {
 
 
 
-/* ===== ABOUT SECTION ===== */
+/* ==========================================================
+   ABOUT SECTION
+   Purpose: Controls the layout, spacing, text, button, and image
+   for the “My Analytical Mindset” section.
+   ========================================================== */
+
+/* Main About section background and spacing */
 .about-hero {
   background: #20163A;
   background-image:
     radial-gradient(circle at top left, rgba(30, 7, 8, 0.24), transparent 55%),
     radial-gradient(circle at bottom right, rgba(30, 7, 8, 0.20), transparent 60%);
   color: #F5F5F7;
-  padding: 3rem 1.5rem 2rem;
+  padding: 3rem 1.5rem 2.4rem;
   position: relative;
   overflow: hidden;
 }
 
+
+/* Small heading above the main title: “SO, WHO AM I?” */
 .about-hero-eyebrow-wrap {
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .about-hero-eyebrow {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #E8A8A8;
   font-weight: 700;
 }
 
+/* Main two-column layout: text on left, image on right */
 .about-hero-inner {
   max-width: 1100px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2.3fr);
-  gap: 2.5rem;
-  align-items: start;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+  gap: 3rem;
+  align-items: center;
 }
 
+/* Text column width */
 .about-hero-text {
-  max-width: 600px;
+  max-width: 620px;
 }
 
+/* Main section title */
 .about-hero-title {
-  font-size: 2.5rem;
-  line-height: 1.2;
+  font-size: 2.65rem;
+  line-height: 1.1;
   color: #FFFFFF;
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.35rem;
   background: linear-gradient(135deg, #FFFFFF, #E8A8A8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: left;
+  letter-spacing: -0.03em;
 }
 
+/* Main paragraph text */
 .about-hero-body {
-  font-size: 1.05rem;
-  line-height: 1.7;
-  margin-bottom: 1.2rem;
-  color: #F5F5F7;
-  opacity: 0.9;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.98rem;        /* ~15.7px */
+  line-height: 1.62;         /* comfortable, not too loose */
+  margin-bottom: 1rem;
+  color: rgba(245, 245, 247, 0.92);  /* slightly faded white */
+  font-weight: 400;
+  letter-spacing: -0.01em;   /* subtle tightening */
 }
 
+
+/* Standalone line: “That is where my work starts.” */
+.about-hero-standout {
+  margin-top: -0.25rem;
+  margin-bottom: 1rem;
+  color: #E8A8A8;
+  font-weight: 700;
+}
+
+/* Final result paragraph before the button */
+.about-hero-result {
+  margin-top: -0.15rem;
+  margin-bottom: 1.4rem;
+}
+
+/* Highlighted words inside the About text */
 .highlight {
   color: #E8A8A8;
-  font-weight: 600;
+  font-weight: 700;
 }
 
+/* About section button */
 .about-hero-button {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 1.5rem;
-  padding: 0.8rem 2rem;
+  margin-top: 0.4rem;
+  padding: 0.75rem 1.8rem;
   border-radius: 999px;
   background: #E8A8A8;
   color: #2C264A;
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 0.95rem;
   text-decoration: none;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
   transition: all 0.3s ease;
 }
 
 .about-hero-button:hover {
   background: #D59595;
   transform: translateY(-2px);
-  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.45);
 }
 
+/* Image column wrapper */
 .about-hero-photo-wrap {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 
+/* Image card container */
 .about-hero-photo-card {
   background: #1A1433;
   border-radius: 28px;
   padding: 0.75rem;
   width: 100%;
-  max-width: 360px;
+  max-width: 345px;
   aspect-ratio: 3 / 4;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(232, 168, 168, 0.2);
 }
 
+/* Profile image inside card */
 .about-hero-photo {
   width: 100%;
   height: 100%;
