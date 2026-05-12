@@ -620,6 +620,29 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const navMenu = document.querySelector("#navmenu");
+    const navToggle = document.querySelector(".mobile-nav-toggle");
+
+    if (navMenu && navToggle) {
+      navToggle.addEventListener("click", function () {
+        navMenu.classList.toggle("nav-open");
+
+        this.classList.toggle("bi-list");
+        this.classList.toggle("bi-x");
+      });
+
+      document.querySelectorAll("#navmenu a").forEach(function (link) {
+        link.addEventListener("click", function () {
+          navMenu.classList.remove("nav-open");
+          navToggle.classList.add("bi-list");
+          navToggle.classList.remove("bi-x");
+        });
+      });
+    }
+  });
+</script>
 
 </body>
 </html>

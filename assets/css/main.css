@@ -1416,6 +1416,17 @@ section {
 }
 
 @media (max-width: 768px) {
+  /* Reduce empty space under the hero on mobile */
+  .hero {
+    min-height: 60vh;
+    padding-top: 95px;
+    padding-bottom: 25px;
+  }
+
+  .hero .social-links {
+    margin-top: 18px;
+  }
+
   .hero h2 {
     font-size: 2.5rem;
   }
@@ -1423,31 +1434,70 @@ section {
   .hero p {
     font-size: 1.2rem;
   }
-  
-  /* Mobile nav menu */
+
+
+  /* ==========================================================
+     MOBILE NAVIGATION MENU
+     Purpose: Controls the dropdown menu shown on phones/tablets
+     when the hamburger icon is tapped.
+     ========================================================== */
+
+  /* Position the mobile nav dropdown near the top-right corner */
   .navmenu {
     position: absolute;
-    top: 60px;
-    right: 1.5rem;
-    background: rgba(20, 20, 20, 0.98);
-    border-radius: 12px;
-    padding: 0.75rem 1rem;
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+    top: 62px;
+    right: 1rem;
+    z-index: 3000;
   }
 
+  /* Hide the menu links by default on mobile */
   .navmenu ul {
     display: none;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
+    min-width: 230px;
+    padding: 1rem;
+    margin: 0;
+    list-style: none;
+
+    /* Dropdown appearance */
+    background: rgba(20, 20, 20, 0.98);
+    border-radius: 16px;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(232, 168, 168, 0.18);
   }
 
+  /* Show the menu links when JavaScript adds the nav-open class */
   .navmenu.nav-open ul {
     display: flex;
   }
 
+  /* Style each mobile menu link */
+  .navmenu a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--soft-white);
+    font-size: 0.95rem;
+    border-radius: 10px;
+  }
+
+  /* Highlight active and hovered menu links */
+  .navmenu a:hover,
+  .navmenu a.active {
+    background: rgba(232, 168, 168, 0.15);
+    color: var(--coral-accent);
+  }
+
+  /* Hamburger / close icon */
   .mobile-nav-toggle {
     display: block;
+    font-size: 1.9rem;
+    cursor: pointer;
+    color: var(--soft-white);
+    z-index: 3100;
+    position: relative;
   }
+
 
   .education-header {
     flex-direction: column;
