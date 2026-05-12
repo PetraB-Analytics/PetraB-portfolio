@@ -1418,18 +1418,18 @@ section {
 @media (max-width: 768px) {
 
   /* Keep hero full height, but move content lower on mobile */
+
 .hero {
-  min-height: 100vh;
-  padding-top: 80px;
-  padding-bottom: 55px;
-  align-items: flex-end;
+  min-height: 82vh;
+  padding-top: 105px;
+  padding-bottom: 45px;
+  align-items: center;
 }
+
 
 .hero .social-links {
   margin-top: 24px;
 }
-
-
 
 
   .hero h2 {
