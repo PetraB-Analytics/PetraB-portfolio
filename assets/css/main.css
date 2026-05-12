@@ -1416,16 +1416,21 @@ section {
 }
 
 @media (max-width: 768px) {
-  /* Reduce empty space under the hero on mobile */
-  .hero {
-    min-height: 60vh;
-    padding-top: 95px;
-    padding-bottom: 25px;
-  }
 
-  .hero .social-links {
-    margin-top: 18px;
-  }
+  /* Keep hero full height, but move content lower on mobile */
+.hero {
+  min-height: 100vh;
+  padding-top: 80px;
+  padding-bottom: 55px;
+  align-items: flex-end;
+}
+
+.hero .social-links {
+  margin-top: 24px;
+}
+
+
+
 
   .hero h2 {
     font-size: 2.5rem;
