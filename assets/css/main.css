@@ -1125,7 +1125,7 @@ section {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  box-shadow: 0 6px 14px rgba(232,168,168,0.45);
+  box-shadow: 0 4px 10px rgba(232, 168, 168, 0.25);
   transition: transform 0.2s ease, box-shadow 0.2s ease,
               background 0.2s ease;
 }
@@ -1136,8 +1136,37 @@ section {
 
 .project-card:hover .project-button {
   transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(232,168,168,0.55);
+  box-shadow: 0 5px 12px rgba(232, 168, 168, 0.32);
 }
+
+
+/* Project card alignment fix */
+.projects-grid {
+  align-items: stretch;
+}
+
+.project-card {
+  height: 100%;
+}
+
+.project-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.project-description {
+  min-height: 86px;
+}
+
+.project-meta {
+  margin-top: auto;
+}
+
+.project-button {
+  width: fit-content;
+}
+
 
 /* ===== COMPACT CONTACT SECTION ===== */
 .contact-section {

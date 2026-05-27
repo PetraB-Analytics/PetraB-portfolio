@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Fintech Operations Workflow | Petra Biney</title>
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+  />
+
+  <style>
+    :root {
+      --bg-main: #080b1f;
+      --bg-card: rgba(22, 25, 55, 0.92);
+      --bg-card-soft: rgba(255, 255, 255, 0.045);
+      --border-soft: rgba(255, 255, 255, 0.11);
+
+      --text-main: #f7f7fb;
+      --text-muted: #b8bfd7;
+
+      --accent-blue: #60a5fa;
+      --accent-purple: #a78bfa;
+      --accent-green: #74d97b;
+      --accent-yellow: #facc15;
+      --accent-pink: #fb7185;
+      --accent-teal: #5eead4;
+      --accent-cyan: #26a8cf;
+      --title-pink: #ff9bad;
+
+      --section-gap: 16px;
+      --card-padding: 20px;
+
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --shadow-card: 0 12px 32px rgba(0, 0, 0, 0.24);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(96, 165, 250, 0.14), transparent 32%),
+        radial-gradient(circle at top right, rgba(251, 113, 133, 0.12), transparent 30%),
+        linear-gradient(135deg, #07091a 0%, #11132f 48%, #080b1f 100%);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .project-page {
+      width: min(1320px, 94%);
+      margin: 0 auto;
+      padding: 28px 0 42px;
+    }
+
+    .dashboard-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+    }
+
+    h1, h2, h3 {
+      line-height: 1.25;
+    }
+
+    h2 {
+      font-size: 0.85rem;
+      color: var(--title-pink);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+
+    p {
+      color: var(--text-muted);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* GLOBAL SPACING */
+    .dashboard-grid {
+      display: grid;
+      gap: var(--section-gap);
+      margin-bottom: var(--section-gap);
+    }
+
+    .hero,
+    .tools-card,
+    .proof-section,
+    .insights-card,
+    .value-card {
+      margin-bottom: var(--section-gap);
+    }
+
+    .compact-card,
+    .tools-card,
+    .proof-section,
+    .insights-card,
+    .value-card {
+      padding: var(--card-padding);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.45fr 0.85fr;
+      gap: 20px;
+      padding: 22px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      right: 30%;
+      top: -170px;
+      background:
+        radial-gradient(circle, rgba(167, 139, 250, 0.12), transparent 64%),
+        repeating-radial-gradient(circle, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 8px);
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    .hero-text, .overview-card { position: relative; z-index: 2; }
+    .breadcrumb { color: #ffc0cb; font-size: 0.68rem; margin-bottom: 6px; letter-spacing: 0.03em; }
+    .hero h1 {
+      font-size: clamp(1.85rem, 2.8vw, 2.75rem);
+      max-width: 720px;
+      margin-bottom: 8px;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #ffffff, var(--accent-cyan));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      max-width: 720px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: #e0e5f5;
+      margin-bottom: 12px;
+    }
+    .tag-group { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag-group span {
+      background: rgba(167, 139, 250, 0.18);
+      color: #e9ddff;
+      border: 1px solid rgba(167, 139, 250, 0.25);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.68rem;
+      transition: all 0.2s;
+    }
+    .tag-group span:hover { background: rgba(167, 139, 250, 0.3); transform: translateY(-1px); }
+
+    .overview-card {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-self: center;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid var(--border-soft);
+    }
+    .overview-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: linear-gradient(135deg, rgba(251, 113, 133, 0.24), rgba(167, 139, 250, 0.18));
+      color: var(--accent-pink);
+      font-size: 1rem;
+    }
+    .overview-card h3 { margin-bottom: 4px; color: #ffd1da; font-size: 0.88rem; font-weight: 600; }
+    .overview-card p { font-size: 0.72rem; line-height: 1.45; }
+
+    /* ===== SECTION HEADINGS (Gradient + Glow) ===== */
+    .main-grid { grid-template-columns: 1.08fr 0.92fr; align-items: start; }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .section-heading p { font-size: 0.76rem; margin-top: 2px; }
+
+    .section-icon {
+      min-width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      font-size: 1rem;
+      color: white;
+    }
+    .section-icon.blue { background: linear-gradient(135deg, #60a5fa, #2563eb); box-shadow: 0 3px 8px rgba(96, 165, 250, 0.25); }
+    .section-icon.green { background: linear-gradient(135deg, #c38eb4, #8b5e7a); box-shadow: 0 3px 8px rgba(195, 142, 180, 0.2); }
+    .section-icon.purple { background: linear-gradient(135deg, #a78bfa, #6d28d9); box-shadow: 0 3px 8px rgba(167, 139, 250, 0.25); }
+    .section-icon.yellow { background: linear-gradient(135deg, #26a8cf, #1a7a99); box-shadow: 0 3px 8px rgba(38, 168, 207, 0.2); }
+    .section-icon.teal { background: linear-gradient(135deg, #5eead4, #0f766e); box-shadow: 0 3px 8px rgba(94, 234, 212, 0.2); }
+
+    /* ===== WORKFLOW TIMELINE ===== */
+    .compact-timeline {
+      display: grid;
+      gap: 10px;
+      position: relative;
+    }
+    .compact-timeline::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      bottom: 18px;
+      left: 16px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-pink));
+      opacity: 0.6;
+    }
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 10px;
+      position: relative;
+    }
+    .timeline-number {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 0.78rem;
+      color: #fff;
+      z-index: 2;
+    }
+    .timeline-row > div {
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: var(--bg-card-soft);
+      border: 1px solid rgba(96, 165, 250, 0.16);
+    }
+    .timeline-row h3 { font-size: 0.82rem; margin-bottom: 3px; }
+    .timeline-row p { font-size: 0.72rem; line-height: 1.45; }
+
+    /* ENHANCED THINKING PROMPTS (Pills with icons) */
+    .thinking-prompt {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .thinking-prompt:hover { transform: translateX(3px); filter: brightness(1.05); }
+    .thinking-prompt i { font-size: 0.75rem; opacity: 0.9; }
+
+    .prompt-1 { background: rgba(167, 139, 250, 0.16); border-left: 3px solid #A78BFA; color: #ddd0ff; }
+    .prompt-2 { background: rgba(96, 165, 250, 0.16); border-left: 3px solid #60A5FA; color: #c7e2ff; }
+    .prompt-3 { background: rgba(116, 217, 123, 0.16); border-left: 3px solid #74D97B; color: #ccf5d4; }
+    .prompt-4 { background: rgba(250, 204, 21, 0.16); border-left: 3px solid #FACC15; color: #fff3bf; }
+    .prompt-5 { background: rgba(251, 113, 133, 0.16); border-left: 3px solid #FB7185; color: #ffd5da; }
+    .prompt-6 { background: rgba(38, 168, 207, 0.16); border-left: 3px solid #26A8CF; color: #cbf6ff; }
+
+    .purple { background: linear-gradient(135deg, #a78bfa, #6d28d9); box-shadow: 0 3px 8px rgba(167,139,250,0.25); }
+    .blue { background: linear-gradient(135deg, #60a5fa, #2563eb); box-shadow: 0 3px 8px rgba(96,165,250,0.25); }
+    .green { background: linear-gradient(135deg, #74d97b, #15803d); box-shadow: 0 3px 8px rgba(116,217,123,0.2); }
+    .yellow { background: linear-gradient(135deg, #facc15, #ca8a04); box-shadow: 0 3px 8px rgba(250,204,21,0.2); }
+    .pink { background: linear-gradient(135deg, #fb7185, #be123c); box-shadow: 0 3px 8px rgba(251,113,133,0.2); }
+    .teal { background: linear-gradient(135deg, #5eead4, #0f766e); box-shadow: 0 3px 8px rgba(94,234,212,0.2); }
+
+    /* ===== CUSTOMER ISSUES ===== */
+    .issue-stack { display: grid; gap: 10px; }
+    .issue-line {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: var(--bg-card-soft);
+      border: 1px solid var(--border-soft);
+      transition: all 0.2s;
+    }
+    .issue-line:hover { background: rgba(255, 255, 255, 0.065); transform: translateX(3px); }
+    .issue-line span {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      font-size: 0.95rem;
+      color: white;
+    }
+    .issue-line.payment span { background: linear-gradient(135deg, #74d97b, #15803d); box-shadow: 0 2px 6px rgba(116,217,123,0.2); }
+    .issue-line.account span { background: linear-gradient(135deg, #c38eb4, #8b5e7a); box-shadow: 0 2px 6px rgba(195,142,180,0.2); }
+    .issue-line.lockout span { background: linear-gradient(135deg, #26a8cf, #1a7a99); box-shadow: 0 2px 6px rgba(38,168,207,0.2); }
+    .issue-line.sync span { background: linear-gradient(135deg, #fb7185, #be123c); box-shadow: 0 2px 6px rgba(251,113,133,0.2); }
+    .issue-line.followup span { background: linear-gradient(135deg, #5eead4, #0f766e); box-shadow: 0 2px 6px rgba(94,234,212,0.2); }
+    .issue-line.risk span { background: linear-gradient(135deg, #60a5fa, #2563eb); box-shadow: 0 2px 6px rgba(96,165,250,0.2); }
+    .issue-line h3 { font-size: 0.82rem; margin-bottom: 3px; }
+    .issue-line p { font-size: 0.72rem; line-height: 1.45; }
+
+    /* ===== TOOLS STRIP (SVG Logos + Brand Colors) ===== */
+    .tools-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    .tool-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 12px 8px;
+      border-radius: 14px;
+      background: var(--bg-card-soft);
+      border: 1px solid var(--border-soft);
+      transition: all 0.2s ease;
+    }
+    .tool-pill:hover { transform: translateY(-3px); background: rgba(96, 165, 250, 0.08); border-color: rgba(96, 165, 250, 0.25); }
+    .tool-pill .tool-icon-svg {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      margin-bottom: 8px;
+    }
+    .tool-pill.freshdesk .tool-icon-svg svg { width: 32px; height: 32px; }
+    .tool-pill.zoho .tool-icon-svg svg { width: 30px; height: 30px; }
+    .tool-pill.payg .tool-icon-svg { background: linear-gradient(135deg, #26a8cf, #1a7a99); color: white; font-size: 1.2rem; }
+    .tool-pill.notes .tool-icon-svg { background: linear-gradient(135deg, #c38eb4, #8b5e7a); color: white; font-size: 1.2rem; }
+    .tool-pill.team .tool-icon-svg { background: linear-gradient(135deg, #a78bfa, #6d28d9); color: white; font-size: 1.2rem; }
+    .tool-pill h3 { font-size: 0.78rem; font-weight: 700; margin-bottom: 3px; }
+    .tool-pill p { font-size: 0.65rem; }
+
+    /* ===== EXECUTION PROOF ===== */
+    .proof-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 16px; }
+    .ticket-card, .video-card {
+      padding: 14px;
+      border-radius: 14px;
+      background: var(--bg-card-soft);
+      border: 1px solid var(--border-soft);
+    }
+    .ticket-card h3, .video-card h3 { margin-bottom: 10px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
+    .ticket-box {
+      background: #fff8e9;
+      border-radius: 12px;
+      padding: 10px 12px;
+      color: #26324a;
+    }
+    .ticket-row { padding: 6px 0; border-bottom: 1px dashed rgba(0, 0, 0, 0.1); }
+    .ticket-row:last-child { border-bottom: none; }
+    .ticket-row strong { color: #172033; font-size: 0.72rem; display: block; margin-bottom: 3px; }
+    .ticket-row p { color: #39435d; font-size: 0.68rem; margin-top: 2px; }
+    .video-box {
+      min-height: 210px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 16px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 42%),
+                  radial-gradient(circle at bottom right, rgba(251,113,133,0.12), transparent 38%),
+                  #101633;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .video-flow { display: flex; align-items: center; gap: 8px; color: var(--text-muted); flex-wrap: wrap; justify-content: center; }
+    .video-flow span { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; background: rgba(255,255,255,0.08); color: #fff; }
+    .play-button {
+      width: 60px;
+      height: 60px;
+      display: grid;
+      place-items: center;
+      border: none;
+      border-radius: 50%;
+      background: #ffffff;
+      color: #11132f;
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+      margin: 8px auto;
+    }
+    .play-button:hover { transform: scale(1.04); box-shadow: 0 0 12px rgba(255,255,255,0.2); }
+    .video-box p { font-size: 0.72rem; margin-top: 6px; }
+    .video-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #fb7185, #a78bfa);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    /* ===== INSIGHTS ===== */
+    .insight-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .insight-chip {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: var(--bg-card-soft);
+      border: 1px solid var(--border-soft);
+      transition: all 0.2s;
+    }
+    .insight-chip:hover { transform: translateX(3px); background: rgba(96,165,250,0.08); }
+    .insight-chip i { color: var(--accent-green); font-size: 1rem; width: 24px; }
+    .insight-chip span { color: var(--text-muted); font-size: 0.72rem; font-weight: 600; }
+
+    /* ===== VALUE CARD ===== */
+    .value-card {
+      display: grid;
+      grid-template-columns: 68px 1fr;
+      gap: 16px;
+      align-items: center;
+      background: radial-gradient(circle at left, rgba(251, 113, 133, 0.15), transparent 55%),
+                  rgba(22, 25, 55, 0.92);
+    }
+    .value-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #fb7185, #a78bfa);
+      color: white;
+      font-size: 1.6rem;
+      box-shadow: 0 3px 10px rgba(251, 113, 133, 0.2);
+      transition: transform 0.2s;
+    }
+    .value-card:hover .value-icon { transform: scale(1.03); }
+    .value-card h2 { color: var(--title-pink); text-transform: none; font-size: 1rem; margin-bottom: 4px; }
+    .value-card p { font-size: 0.8rem; line-height: 1.5; color: #e9edf9; }
+
+    /* ===== BACK LINK ===== */
+    .back-link-wrap { display: flex; justify-content: flex-start; margin-top: 8px; }
+    .back-link {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-soft);
+      color: var(--text-main);
+      font-size: 0.78rem;
+      transition: all 0.2s;
+    }
+    .back-link:hover { gap: 12px; background: rgba(96, 165, 250, 0.1); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1180px) {
+      .hero, .main-grid, .proof-grid { grid-template-columns: 1fr; }
+      .tools-strip, .insight-chips { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 760px) {
+      .project-page { width: min(94%, 680px); padding: 20px 0; }
+      .hero, .compact-card, .tools-card, .proof-section, .insights-card, .value-card { padding: 16px; }
+      .overview-card { grid-template-columns: 1fr; text-align: center; }
+      .overview-icon { margin: 0 auto; }
+      .hero h1 { font-size: 1.9rem; }
+      .tools-strip, .insight-chips { grid-template-columns: 1fr; }
+      .value-card { grid-template-columns: 1fr; text-align: center; }
+      .value-icon { margin: 0 auto; }
+      .timeline-row { grid-template-columns: 1fr; text-align: center; }
+      .timeline-number { margin: 0 auto; }
+      .compact-timeline::before { display: none; }
+      .issue-line { grid-template-columns: 1fr; text-align: center; }
+      .issue-line span { margin: 0 auto 6px; }
+      .thinking-prompt { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<main class="project-page">
+
+  <!-- HERO SECTION -->
+  <section class="hero dashboard-card">
+    <div class="hero-text">
+      <p class="breadcrumb">Projects & Case Studies / Fintech Operations Workflow Analysis</p>
+      <h1>Fintech Operations Workflow Analysis</h1>
+      <p class="hero-subtitle">
+        A customer operations workflow showing how support tickets, PAYG account context,
+        and troubleshooting reveal recurring issues and support faster resolution.
+      </p>
+      <div class="tag-group">
+        <span>Freshdesk</span>
+        <span>PAYG Platform</span>
+        <span>Customer Operations</span>
+        <span>Technical Troubleshooting</span>
+        <span>Issue Pattern Analysis</span>
+      </div>
+    </div>
+    <div class="overview-card">
+      <div class="overview-icon"><i class="bi bi-bullseye"></i></div>
+      <div>
+        <h3>Project Overview</h3>
+        <p>This project presents a structured customer operations workflow in a PAYG fintech environment. It shows how ticket data, account context, and support patterns can improve response quality, escalation handling, and customer experience.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKFLOW + CUSTOMER ISSUES -->
+  <section class="dashboard-grid main-grid">
+    <article class="dashboard-card compact-card">
+      <div class="section-heading">
+        <span class="section-icon blue"><i class="bi bi-diagram-3"></i></span>
+        <div><h2>Customer Operations & Resolution Workflow</h2><p>What happens from ticket review to learning.</p></div>
+      </div>
+      <div class="compact-timeline">
+        <div class="timeline-row"><span class="timeline-number purple">1</span><div><h3>Review & Understand Issue</h3><p>Understand the request, history, and context.</p><div class="thinking-prompt prompt-1"><i class="bi bi-chat-left-quote"></i><span>What exactly is the customer reporting?</span></div></div></div>
+        <div class="timeline-row"><span class="timeline-number blue">2</span><div><h3>Verify Account & System Data</h3><p>Check payment, account, device, and system records.</p><div class="thinking-prompt prompt-2"><i class="bi bi-search"></i><span>What does the system show?</span></div></div></div>
+        <div class="timeline-row"><span class="timeline-number green">3</span><div><h3>Diagnose & Identify Root Cause</h3><p>Compare customer reports with system evidence.</p><div class="thinking-prompt prompt-3"><i class="bi bi-diagram-3"></i><span>What is causing the issue?</span></div></div></div>
+        <div class="timeline-row"><span class="timeline-number yellow">4</span><div><h3>Troubleshoot & Resolve</h3><p>Guide the customer, test causes, and resolve within access level.</p><div class="thinking-prompt prompt-4"><i class="bi bi-tools"></i><span>Can this be resolved now, or does it require escalation?</span></div></div></div>
+        <div class="timeline-row"><span class="timeline-number pink">5</span><div><h3>Communicate & Escalate</h3><p>Provide updates, set expectations, and escalate with context.</p><div class="thinking-prompt prompt-5"><i class="bi bi-chat-dots"></i><span>What does the customer need to know? What does the next team need?</span></div></div></div>
+        <div class="timeline-row"><span class="timeline-number teal">6</span><div><h3>Document & Track Learning</h3><p>Record actions and use recurring issues to improve support.</p><div class="thinking-prompt prompt-6"><i class="bi bi-journal-bookmark-fill"></i><span>What insight can be captured to reduce future friction?</span></div></div></div>
+      </div>
+    </article>
+
+    <article class="dashboard-card compact-card">
+      <div class="section-heading">
+        <span class="section-icon green"><i class="bi bi-grid-3x3-gap"></i></span>
+        <div><h2>Customer Issues & How They Are Analyzed</h2><p>Common issue areas reviewed during support.</p></div>
+      </div>
+      <div class="issue-stack">
+        <div class="issue-line payment"><span><i class="bi bi-credit-card"></i></span><div><h3>Payment & Balance Issues</h3><p>Verify mobile money transactions, payment states, and balance mismatches.</p></div></div>
+        <div class="issue-line account"><span><i class="bi bi-person-lock"></i></span><div><h3>Account Access Problems</h3><p>Check activation, access status, account updates, and payment response.</p></div></div>
+        <div class="issue-line lockout"><span><i class="bi bi-lock"></i></span><div><h3>Device Lockout Issues</h3><p>Review lock status and confirm whether payment should restore access.</p></div></div>
+        <div class="issue-line sync"><span><i class="bi bi-arrow-repeat"></i></span><div><h3>Payment-to-System Sync</h3><p>Track sync delays, missing updates, and system-side mismatches.</p></div></div>
+        <div class="issue-line followup"><span><i class="bi bi-clock-history"></i></span><div><h3>Repeated Follow-Up Cases</h3><p>Identify unresolved or recurring issues and reduce repeat friction.</p></div></div>
+        <div class="issue-line risk"><span><i class="bi bi-shield-exclamation"></i></span><div><h3>Risk / Fraud Signals</h3><p>Detect conflicting information, ownership disputes, and high-risk cases.</p></div></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- DATA & SYSTEMS USED (SVG Logos) -->
+  <section class="dashboard-card tools-card">
+    <div class="section-heading">
+      <span class="section-icon purple"><i class="bi bi-database"></i></span>
+      <div><h2>Data & Systems Used</h2><p>Systems and records that support review, troubleshooting, and resolution.</p></div>
+    </div>
+    <div class="tools-strip">
+      <div class="tool-pill freshdesk">
+        <div class="tool-icon-svg"><svg viewBox="0 0 24 24" fill="none" width="32" height="32"><rect width="24" height="24" rx="4" fill="#13C96D"/><path d="M7 8H17V10H7V8Z" fill="white"/><path d="M7 11H14V13H7V11Z" fill="white"/><path d="M7 14H12V16H7V14Z" fill="white"/><circle cx="18" cy="12" r="2" fill="white"/></svg></div>
+        <div><h3>Freshdesk</h3><p>Tickets & case history</p></div>
+      </div>
+      <div class="tool-pill payg">
+        <div class="tool-icon-svg"><i class="bi bi-lightning-charge"></i></div>
+        <div><h3>PAYG Platform</h3><p>Payment & account state</p></div>
+      </div>
+      <div class="tool-pill zoho">
+        <div class="tool-icon-svg"><svg viewBox="0 0 24 24" fill="none" width="30" height="30"><rect width="24" height="24" rx="4" fill="#F48C06"/><path d="M5 8L12 13L19 8" stroke="white" stroke-width="1.5" fill="none"/><rect x="5" y="7" width="14" height="10" rx="1" stroke="white" stroke-width="1.5" fill="none"/></svg></div>
+        <div><h3>Zoho Mail</h3><p>Email & follow-ups</p></div>
+      </div>
+      <div class="tool-pill notes">
+        <div class="tool-icon-svg"><i class="bi bi-journal-text"></i></div>
+        <div><h3>Internal Notes</h3><p>Case notes & outcomes</p></div>
+      </div>
+      <div class="tool-pill team">
+        <div class="tool-icon-svg"><i class="bi bi-people"></i></div>
+        <div><h3>Team Collaboration</h3><p>Technical feedback</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXECUTION PROOF -->
+  <section class="dashboard-card proof-section">
+    <div class="section-heading">
+      <span class="section-icon yellow"><i class="bi bi-check2-square"></i></span>
+      <div><h2>Execution Proof</h2><p>How the workflow is documented and demonstrated in practice.</p></div>
+    </div>
+    <div class="proof-grid">
+      <article class="ticket-card"><h3><i class="bi bi-file-text-fill"></i> Sample Ticket Note</h3><div class="ticket-box"><div class="ticket-row"><strong>Issue Type</strong><p>Payment reflected but device still locked.</p></div><div class="ticket-row"><strong>Checks Completed</strong><p>Payment status, balance, device/access status, and previous ticket reviewed.</p></div><div class="ticket-row"><strong>Action Taken</strong><p>Customer guided through approved troubleshooting steps.</p></div><div class="ticket-row"><strong>Outcome</strong><p>Resolved or escalated with full context for review.</p></div></div></article>
+      <article class="video-card"><h3><i class="bi bi-play-circle"></i> Workflow Walkthrough Video</h3><div class="video-box"><div class="video-flow"><span><i class="bi bi-chat-left-text"></i></span><i class="bi bi-arrow-right"></i><span><i class="bi bi-search"></i></span><i class="bi bi-arrow-right"></i><span><i class="bi bi-tools"></i></span><i class="bi bi-arrow-right"></i><span><i class="bi bi-clipboard-check"></i></span></div><button class="play-button" type="button" onclick="alert('🎬 Walkthrough demo: Ticket → Diagnosis → Resolution → Documentation')"><i class="bi bi-play-fill"></i></button><p>Ticket → Diagnosis → Resolution → Documentation</p></div><a href="#" class="video-link" onclick="alert('Full walkthrough video coming soon'); return false;">Watch Workflow Walkthrough <i class="bi bi-arrow-right"></i></a></article>
+    </div>
+  </section>
+
+  <!-- KEY INSIGHTS -->
+  <section class="dashboard-card insights-card">
+    <div class="section-heading">
+      <span class="section-icon teal"><i class="bi bi-graph-up-arrow"></i></span>
+      <div><h2>Key Insights This Workflow Supports</h2><p>Operational improvements supported by structured review and troubleshooting.</p></div>
+    </div>
+    <div class="insight-chips">
+      <div class="insight-chip"><i class="bi bi-check-circle-fill"></i><span>Reduced repeated customer friction</span></div>
+      <div class="insight-chip"><i class="bi bi-check-circle-fill"></i><span>Improved payment-to-account accuracy</span></div>
+      <div class="insight-chip"><i class="bi bi-check-circle-fill"></i><span>Better resolution efficiency</span></div>
+      <div class="insight-chip"><i class="bi bi-check-circle-fill"></i><span>Stronger escalation quality</span></div>
+      <div class="insight-chip"><i class="bi bi-check-circle-fill"></i><span>Improved customer communication</span></div>
+      <div class="insight-chip"><i class="bi bi-check-circle-fill"></i><span>Continuous process improvement</span></div>
+    </div>
+  </section>
+
+  <!-- VALUE DELIVERED -->
+  <section class="dashboard-card value-card">
+    <div class="value-icon"><i class="bi bi-gem"></i></div>
+    <div><h2>Value Delivered</h2><p>Drives better customer outcomes through faster, more accurate resolution, reduced repeat friction, and clearer visibility into complex or recurring issues across the PAYG customer journey.</p></div>
+  </section>
+
+  <!-- BACK LINK -->
+  <div class="back-link-wrap">
+    <a href="#" class="back-link"><i class="bi bi-arrow-left"></i> Back to Projects</a>
+  </div>
+
+</main>
+
+</body>
+</html>
