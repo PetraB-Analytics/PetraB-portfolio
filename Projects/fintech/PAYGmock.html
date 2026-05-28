@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PAYG OpsFlow Review Demo</title>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --ink: #1f2937;
+      --muted: #667085;
+      --primary: #1f4f7a;
+      --primary-dark: #142f4a;
+      --primary-soft: #eaf3fb;
+      --accent: #f28c00;
+      --line: #d9e2ec;
+      --success: #168a5b;
+      --warning: #d98200;
+      --shadow: 0 8px 22px rgba(31, 79, 122, 0.07);
+      --shadow-focus: 0 25px 70px rgba(15, 23, 42, 0.35);
+      --radius: 14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    a { color: #005bbb; text-decoration: underline; font-weight: 700; }
+
+    .payg-back-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.10);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      text-decoration: none;
+      font-size: 12.5px;
+      font-weight: 800;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    }
+
+    .payg-back-button:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.28);
+      transform: translateX(-2px);
+    }
+
+    .sidebar-back-wrap {
+      margin-top: auto;
+      padding-top: 16px;
+    }
+
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar,
+    .focus-sidebar {
+      background: var(--primary-dark);
+      color: #ffffff;
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #ffffff;
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 18px;
+    }
+
+    .brand-text strong { display: block; font-size: 15px; }
+    .brand-text span { color: #cfe1f1; font-size: 11px; }
+
+
+    /* Sidebar O icon quick action menu */
+    .brand-with-actions {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .brand-with-actions .brand {
+      margin-bottom: 0;
+    }
+
+    .sidebar-menu-toggle {
+      display: none;
+    }
+
+    .action-brand-mark {
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .action-brand-mark:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.14);
+    }
+
+    .sidebar-action-menu {
+      display: none;
+      position: absolute;
+      top: 48px;
+      left: 0;
+      width: 380px;
+      max-width: calc(100vw - 40px);
+      background: #ffffff;
+      color: #555555;
+      border: 2px solid #333333;
+      border-radius: 5px;
+      padding: 12px 14px 14px;
+      z-index: 9999;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.28);
+    }
+
+    .sidebar-menu-toggle:checked ~ .sidebar-action-menu {
+      display: block;
+    }
+
+    .sidebar-action-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      background: #555555;
+      color: #ffffff;
+      border-radius: 4px;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .quick-menu-group {
+      margin-bottom: 18px;
+    }
+
+    .quick-menu-group:last-of-type {
+      margin-bottom: 10px;
+    }
+
+    .quick-menu-title {
+      color: #555555;
+      font-size: 13px;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #333333;
+    }
+
+    .quick-menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px 9px;
+    }
+
+    .quick-menu-grid button {
+      min-height: 29px;
+      background: #4a4a4a;
+      color: #ffffff;
+      border: none;
+      border-radius: 2px;
+      padding: 6px 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: default;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .quick-menu-grid button:hover {
+      background: var(--primary);
+    }
+
+    .quick-menu-note {
+      margin-top: 8px;
+      padding: 8px 9px;
+      background: #f2f8fd;
+      color: var(--primary);
+      border: 1px solid #cbdff0;
+      border-radius: 5px;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+
+    .side-nav { display: grid; gap: 6px; }
+
+    .side-nav a {
+      color: #d7e8f7;
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      display: block;
+    }
+
+    .side-nav a:hover,
+    .side-nav a.active {
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+    }
+
+    .main {
+      padding: 22px;
+      max-width: 1500px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .topbar h1 {
+      font-size: 25px;
+      letter-spacing: -0.03em;
+      margin-bottom: 3px;
+    }
+
+    .topbar p { color: var(--muted); font-size: 13px; }
+
+    .demo-badge {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #cbdff0;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .customer-summary {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .customer-summary h2 {
+      color: var(--accent);
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .customer-summary p { color: var(--muted); font-size: 13px; }
+
+    .summary-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .pill.warning { background: #fff4df; color: #9a5b00; }
+    .pill.good { background: #e8f7ef; color: #087443; }
+
+    .workflow-strip {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 12px;
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+
+    .workflow-step {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 9px 8px;
+      background: #fbfdff;
+      min-height: 58px;
+      cursor: help;
+      outline: none;
+    }
+
+    .workflow-step:hover,
+    .workflow-step:focus {
+      border-color: #b8cde0;
+      background: #f7fbff;
+    }
+
+    .step-top {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .step-number {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 900;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+    }
+
+    .workflow-step strong {
+      font-size: 12px;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .info-dot {
+      margin-left: auto;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .tooltip {
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 10px);
+      transform: translateX(-50%);
+      width: 250px;
+      background: #ffffff;
+      color: #344054;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.16);
+      padding: 10px 12px;
+      font-size: 12px;
+      line-height: 1.45;
+      opacity: 0;
+      visibility: hidden;
+      z-index: 70;
+      pointer-events: none;
+    }
+
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      transform: translateX(-50%);
+      border-width: 7px;
+      border-style: solid;
+      border-color: #ffffff transparent transparent transparent;
+    }
+
+    .workflow-step:hover .tooltip,
+    .workflow-step:focus .tooltip,
+    .workflow-step:focus-within .tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .stack { display: grid; gap: 16px; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 12px 14px;
+      background: #fbfdff;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-header h3 { font-size: 15px; color: var(--primary); }
+    .card-header p { color: var(--muted); font-size: 12px; margin-top: 1px; }
+    .card-body { padding: 14px; }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 14px;
+    }
+
+    .field span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .field strong {
+      color: #344054;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .field .good,
+    .good { color: var(--success); }
+
+    .field .warning,
+    .warning { color: var(--warning); }
+
+    .note {
+      margin-top: 12px;
+      padding: 10px 11px;
+      border-radius: 12px;
+      background: #fff8e9;
+      border: 1px dashed #e1ad32;
+      color: #604600;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .payment-row {
+      display: grid;
+      grid-template-columns: 1fr 38px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .payment-toggle { display: none; }
+
+    .expand-button {
+      width: 36px;
+      height: 36px;
+      border: 1px solid #a7b4c3;
+      border-radius: 10px;
+      color: var(--primary);
+      background: #ffffff;
+      display: grid;
+      place-items: center;
+      font-size: 19px;
+      font-weight: 900;
+      cursor: pointer;
+      user-select: none;
+      text-decoration: none;
+    }
+
+    .expand-button:hover { background: var(--primary-soft); }
+
+    .payment-table-wrap {
+      display: none;
+      margin-top: 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .payment-toggle:checked ~ .payment-table-wrap { display: block; }
+
+    .table-close {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: #667085;
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-weight: 900;
+      z-index: 2;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th {
+      background: #d8e7f3;
+      color: #344054;
+      text-align: left;
+      padding: 10px;
+      font-weight: 900;
+      border-right: 1px solid #edf2f7;
+    }
+
+    td {
+      padding: 10px;
+      border-right: 1px solid #edf2f7;
+      border-bottom: 1px solid #edf2f7;
+      color: #475467;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td { background: #f8fafc; }
+
+    .status-list { display: grid; gap: 8px; }
+
+    .status-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #f8fafc;
+      font-size: 13px;
+    }
+
+    .status-row strong { color: #475467; }
+    .status-row span { color: #344054; font-weight: 700; }
+
+    .action-box {
+      padding: 12px;
+      border-left: 4px solid var(--primary);
+      background: #f2f8fd;
+      border-radius: 12px;
+      color: #344054;
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .history-list { display: grid; gap: 8px; }
+
+    .history-item {
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+
+    .history-item strong { display: block; color: #344054; margin-bottom: 3px; }
+    .history-item span { color: var(--muted); font-size: 12px; }
+
+    .privacy-note {
+      background: #f2f8fd;
+      border: 1px solid #cbdff0;
+      color: var(--primary);
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 18px 0 4px;
+    }
+
+    /* Focus overlay restored */
+    .focus-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(15, 23, 42, 0.58);
+      backdrop-filter: blur(6px);
+    }
+
+    .focus-overlay:target {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+    }
+
+    .focus-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      text-decoration: none;
+    }
+
+    .focus-sidebar {
+      position: relative;
+      z-index: 2;
+      height: 100vh;
+    }
+
+    .focus-panel {
+      position: relative;
+      z-index: 3;
+      width: min(900px, calc(100vw - 270px));
+      max-height: calc(100vh - 48px);
+      margin: 24px;
+      overflow-y: auto;
+      background: #ffffff;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-focus);
+    }
+
+    .focus-panel .card {
+      margin: 0;
+      box-shadow: none;
+      border: none;
+      border-radius: 18px;
+    }
+
+    .focus-panel .workflow-strip {
+      margin: 0;
+      box-shadow: none;
+      border: none;
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .focus-close {
+      position: sticky;
+      top: 12px;
+      float: right;
+      z-index: 5;
+      width: 32px;
+      height: 32px;
+      margin: 12px 12px 0 0;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+      text-decoration: none;
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      z-index: 80;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+    }
+
+    .modal-overlay:target { display: flex; }
+
+    .modal-card {
+      width: min(880px, 96vw);
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #98a7b7;
+      box-shadow: 0 22px 60px rgba(15, 23, 42, 0.26);
+      overflow: hidden;
+    }
+
+    .modal-header {
+      height: 44px;
+      background: var(--primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      font-weight: 900;
+    }
+
+    .modal-header a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .modal-body { padding: 14px; }
+
+    .modal-section {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .modal-section h4 {
+      margin-bottom: 10px;
+      color: var(--primary);
+      font-size: 14px;
+    }
+
+    .modal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 16px;
+      font-size: 13px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .modal-btn {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      text-decoration: none;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 800;
+      display: inline-block;
+    }
+
+    .modal-btn.secondary { background: #6b7280; }
+
+    .refund-form {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .refund-form label { font-weight: 800; color: #475467; }
+
+    .refund-form input,
+    .refund-form textarea {
+      border: 1px solid #a7b4c3;
+      border-radius: 7px;
+      padding: 7px;
+      font-family: inherit;
+    }
+
+    .refund-form textarea { min-height: 55px; resize: vertical; }
+
+    .submit-btn {
+      grid-column: 2;
+      width: fit-content;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-weight: 900;
+    }
+
+
+
+    /* Fix: keep the O-icon quick action menu above the main cards */
+    .sidebar,
+    .focus-sidebar {
+      position: sticky;
+      z-index: 300;
+      overflow: visible;
+    }
+
+    .focus-sidebar {
+      position: relative;
+    }
+
+    .brand-with-actions {
+      position: relative;
+      z-index: 500;
+      overflow: visible;
+    }
+
+    .sidebar-action-menu {
+      z-index: 9999;
+    }
+
+    .main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .workflow-strip,
+    .customer-summary,
+    .dashboard-grid,
+    .card {
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 1150px) {
+      .workflow-strip { grid-template-columns: repeat(3, 1fr); }
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .tooltip { bottom: auto; top: calc(100% + 10px); }
+      .tooltip::after {
+        top: auto;
+        bottom: 100%;
+        border-color: transparent transparent #ffffff transparent;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .app-shell { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .main { padding: 16px; }
+      .topbar,
+      .customer-summary { grid-template-columns: 1fr; flex-direction: column; }
+      .summary-status { justify-content: flex-start; }
+      .workflow-strip { grid-template-columns: 1fr; }
+      .data-grid,
+      .modal-grid,
+      .refund-form { grid-template-columns: 1fr; }
+      .submit-btn { grid-column: 1; }
+      .focus-overlay:target { grid-template-columns: 1fr; }
+      .focus-sidebar { display: none; }
+      .focus-panel { width: calc(100vw - 32px); margin: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-with-actions">
+        <input type="checkbox" id="sidebar-menu-toggle" class="sidebar-menu-toggle">
+
+        <div class="brand">
+          <label for="sidebar-menu-toggle" class="brand-mark action-brand-mark" title="Open quick action menu">O</label>
+          <div class="brand-text">
+            <strong>OpsFlow</strong>
+            <span>PAYG Review Demo</span>
+          </div>
+        </div>
+
+        <div class="sidebar-action-menu">
+          <label for="sidebar-menu-toggle" class="sidebar-action-close">×</label>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Devices</div>
+            <div class="quick-menu-grid">
+              <button>Send Credit</button>
+              <button>Send State</button>
+              <button>Direct Swap</button>
+              <button>Mark for return</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Account</div>
+            <div class="quick-menu-grid">
+              <button>Update Info</button>
+              <button>Update Custom Fields</button>
+              <button>Add Product</button>
+              <button>Free Usage</button>
+              <button>Suspend AC</button>
+              <button>Block AC</button>
+              <button>Sell Add-on</button>
+              <button>More Info</button>
+              <button>Sign up Info</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Customer</div>
+            <div class="quick-menu-grid">
+              <button>Add Comment</button>
+              <button>Send SMS</button>
+              <button>Check Eligibility</button>
+              <button>Security Codes</button>
+              <button>Health Insurance</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-note">
+            Demo actions only. No live account, payment, customer, or device changes are performed.
+          </div>
+        </div>
+      </div>
+
+      <nav class="side-nav">
+        <a href="#view-case-workspace" class="active">Case Workspace</a>
+        <a href="#view-account-context">Account Context</a>
+        <a href="#view-payment-verification">Payment Verification</a>
+        <a href="#view-device-check">Device Check</a>
+        <a href="#view-access-reconciliation">Access Reconciliation</a>
+        <a href="#view-remedial-review">Remedial Review</a>
+        <a href="#view-escalation-trigger">Escalation Trigger</a>
+      </nav>
+      <div class="sidebar-back-wrap">
+        <a href="fintech-project.html" class="payg-back-button">← Back to Fintech Workflow</a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>PAYG Customer Access Review</h1>
+          <p>Privacy-safe workflow interface for account, payment, device, and access verification.</p>
+        </div>
+        <div class="demo-badge">Portfolio Demo Only</div>
+      </header>
+
+      <section class="customer-summary">
+        <div>
+          <h2>Demo Customer</h2>
+          <p>Customer Ref: CUST-1900508000 · Account Record: ACC-000001-2 · Review Type: payment reflected, access verification needed</p>
+        </div>
+
+        <div class="summary-status">
+          <span class="pill warning">Verification Needed</span>
+          <span class="pill good">Payment Found</span>
+          <span class="pill">Access Review</span>
+        </div>
+      </section>
+
+      <section class="workflow-strip" aria-label="PAYG review workflow">
+        <div class="workflow-step" tabindex="0">
+          <div class="step-top"><span class="step-number">1</span><strong>Account Context</strong><span class="info-dot">i</span></div>
+          <div class="tooltip">Check status, balance, collection speed, and “To Get on Track” amount.</div>
+        </div>
+        <div class="workflow-step" tabindex="0">
+          <div class="step-top"><span class="step-number">2</span><strong>Payment Verification</strong><span class="info-dot">i</span></div>
+          <div class="tooltip">Review latest payment, expand history, and inspect receipt details.</div>
+        </div>
+        <div class="workflow-step" tabindex="0">
+          <div class="step-top"><span class="step-number">3</span><strong>Device Check</strong><span class="info-dot">i</span></div>
+          <div class="tooltip">Confirm activation, credit timing, and device communication signals.</div>
+        </div>
+        <div class="workflow-step" tabindex="0">
+          <div class="step-top"><span class="step-number">4</span><strong>Access State</strong><span class="info-dot">i</span></div>
+          <div class="tooltip">Compare expected access state against actual access state.</div>
+        </div>
+        <div class="workflow-step" tabindex="0">
+          <div class="step-top"><span class="step-number">5</span><strong>Remedial Review</strong><span class="info-dot">i</span></div>
+          <div class="tooltip">Review refresh, transfer, refund, or direct resolution options.</div>
+        </div>
+        <div class="workflow-step" tabindex="0">
+          <div class="step-top"><span class="step-number">6</span><strong>Escalation Trigger</strong><span class="info-dot">i</span></div>
+          <div class="tooltip">Escalate persistent access, receipt, allocation, or technical issues.</div>
+        </div>
+      </section>
+
+      <div class="dashboard-grid">
+        <div class="stack">
+          <section class="card" id="account-context">
+            <div class="card-header">
+              <div><h3>Account Context</h3><p>Account standing and payment readiness signals</p></div>
+              <span class="pill warning">Not Verified</span>
+            </div>
+            <div class="card-body">
+              <div class="data-grid">
+                <div class="field"><span>Account Status</span><strong class="good">Active</strong></div>
+                <div class="field"><span>Total Financing</span><strong>GHS 3,300.00</strong></div>
+                <div class="field"><span>Amount Paid</span><strong>GHS 620.00 (19.0%)</strong></div>
+                <div class="field"><span>Outstanding</span><strong>GHS 2,680.00</strong></div>
+                <div class="field"><span>Available Balance</span><strong class="warning">GHS 18.40</strong></div>
+                <div class="field"><span>Collection Speed</span><strong class="good">117.0%</strong></div>
+                <div class="field"><span>To Get On Track</span><strong class="good">GHS 0.00</strong></div>
+                <div class="field"><span>Reference Code</span><strong>ACC-000001-2</strong></div>
+              </div>
+              <div class="note">Support note: customer reports payment is reflected, but access status still needs verification.</div>
+            </div>
+          </section>
+
+          <section class="card" id="payment-verification">
+            <div class="card-header"><div><h3>Payment Verification</h3><p>Latest payment, history expansion, and receipt inspection</p></div></div>
+            <div class="card-body">
+              <input type="checkbox" id="payment-toggle" class="payment-toggle">
+              <div class="payment-row">
+                <div class="data-grid">
+                  <div class="field"><span>Amount</span><strong>GHS 15.20</strong></div>
+                  <div class="field"><span>Date Received</span><strong>2026-05-27 03:55:33</strong></div>
+                  <div class="field"><span>Receipt</span><strong>SAMPLE-820938</strong></div>
+                  <div class="field"><span>Paid By</span><strong>0000000000</strong></div>
+                </div>
+                <label for="payment-toggle" class="expand-button" title="Expand payment history">↗</label>
+              </div>
+
+              <div class="payment-table-wrap">
+                <label for="payment-toggle" class="table-close">×</label>
+                <table>
+                  <thead><tr><th>Date Created</th><th>Payment Phone</th><th>Paid By</th><th>Amount</th><th>Receipt Number</th></tr></thead>
+                  <tbody>
+                    <tr><td>2026-05-27<br>03:55:33</td><td>0000000000</td><td>0000000000</td><td>15.2</td><td><a href="#payment-modal">SAMPLE-820938</a></td></tr>
+                    <tr><td>2026-05-26<br>16:05:07</td><td>0000000000</td><td>0000000000</td><td>16</td><td><a href="#payment-modal">SAMPLE-315498</a></td></tr>
+                    <tr><td>2026-05-24<br>14:24:02</td><td>0000000000</td><td>0000000000</td><td>32</td><td><a href="#payment-modal">SAMPLE-819302</a></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="card" id="device-check">
+            <div class="card-header"><div><h3>Device & Communication Check</h3><p>Activation, credit timing, and communication signals</p></div></div>
+            <div class="card-body">
+              <div class="data-grid">
+                <div class="field"><span>Device Record</span><strong>Demo PAYG Device 001</strong></div>
+                <div class="field"><span>Communication State</span><strong class="good">Activated</strong></div>
+                <div class="field"><span>Last Credits Sent</span><strong>1</strong></div>
+                <div class="field"><span>Credit Sent Date</span><strong>27/05/2026 03:55:35</strong></div>
+                <div class="field"><span>Device IMEI</span><strong>IMEI-000000000000</strong></div>
+                <div class="field"><span>Tamper Alert Review</span><strong class="good">No active alert shown</strong></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-header"><div><h3>Case History Log</h3><p>Recent payment and support events</p></div></div>
+            <div class="card-body">
+              <div class="history-list">
+                <div class="history-item"><strong>Payment In · GHS 15.20</strong><span>Today · 03:55 · Actioned By: System</span></div>
+                <div class="history-item"><strong>Payment In · GHS 16.00</strong><span>26 May 2026 · 16:05 · Actioned By: System</span></div>
+                <div class="history-item"><strong>Support Review Note Added</strong><span>26 May 2026 · 16:20 · Actioned By: Support Agent</span></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="stack">
+          <section class="card" id="access-reconciliation">
+            <div class="card-header"><div><h3>Access State Reconciliation</h3><p>Expected access compared with actual access</p></div></div>
+            <div class="card-body status-list">
+              <div class="status-row"><strong>Enrollment State</strong><span>Enrolled</span></div>
+              <div class="status-row"><strong>Expected State</strong><span>Unlocked</span></div>
+              <div class="status-row"><strong>Actual State</strong><span>Locked</span></div>
+              <div class="status-row"><strong>Last System Check</strong><span>27 May 2026 15:01</span></div>
+              <div class="action-box">
+Access state does not match expected condition. If the customer still reports restriction, refresh account status and review device communication context.
+</div>
+            </div>
+          </section>
+
+          <section class="card" id="remedial-review">
+            <div class="card-header"><div><h3>Remedial Review</h3><p>Refresh, transfer, refund, or direct resolution options</p></div></div>
+            <div class="card-body">
+              <div class="data-grid">
+                <div class="field"><span>Account Refresh</span><strong>Sync available credits</strong></div>
+                <div class="field"><span>Transfer Review</span><strong><a href="#payment-modal">Open transfer context</a></strong></div>
+                <div class="field"><span>Refund Review</span><strong><a href="#payment-modal-refund">Open refund form</a></strong></div>
+                <div class="field"><span>Direct Resolution</span><strong>Notify customer access is correct</strong></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card" id="escalation-trigger">
+            <div class="card-header"><div><h3>Escalation Trigger</h3><p>When the case should move beyond direct support</p></div></div>
+            <div class="card-body">
+              <div class="action-box">Escalate only if there is persistent access mismatch, unclear receipt status, payment allocation issue, or technical condition that cannot be resolved after verification.</div>
+              <div class="note">Escalation context should include account status, payment receipt, payment timestamp, access state, device communication signal, and customer report.</div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-header"><div><h3>Case Note Preview</h3><p>Example documentation after review</p></div></div>
+            <div class="card-body">
+              <div class="action-box">Customer reported that the device remained locked after payment.I reviewed the payment record, receipt, balance, and collection status. Expected State showed Unlocked, but Actual State remained Locked. I performed technical troubleshooting directly with the customer, refreshed the account/device status, and resolved the issue.</div>
+            </div>
+          </section>
+
+          <section class="privacy-note">Privacy-safe fictional interface created for portfolio demonstration. All customer details, account numbers, payment references, device identifiers, and values are fictional.</section>
+        </aside>
+      </div>
+
+      <div class="footer">OpsFlow PAYG Review Demo · Fictional workflow interface for portfolio demonstration only.</div>
+    </main>
+  </div>
+
+  <!-- Focus overlays -->
+  <div id="view-case-workspace" class="focus-overlay">
+    <a href="#" class="focus-backdrop"></a>
+    <aside class="focus-sidebar">
+      <div class="brand-with-actions">
+        <input type="checkbox" id="focus-menu-toggle-1" class="sidebar-menu-toggle">
+
+        <div class="brand">
+          <label for="focus-menu-toggle-1" class="brand-mark action-brand-mark" title="Open quick action menu">O</label>
+          <div class="brand-text">
+            <strong>OpsFlow</strong>
+            <span>PAYG Review Demo</span>
+          </div>
+        </div>
+
+        <div class="sidebar-action-menu">
+          <label for="focus-menu-toggle-1" class="sidebar-action-close">×</label>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Devices</div>
+            <div class="quick-menu-grid">
+              <button>Send Credit</button>
+              <button>Send State</button>
+              <button>Direct Swap</button>
+              <button>Mark for return</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Account</div>
+            <div class="quick-menu-grid">
+              <button>Update Info</button>
+              <button>Update Custom Fields</button>
+              <button>Add Product</button>
+              <button>Free Usage</button>
+              <button>Suspend AC</button>
+              <button>Block AC</button>
+              <button>Sell Add-on</button>
+              <button>More Info</button>
+              <button>Sign up Info</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Customer</div>
+            <div class="quick-menu-grid">
+              <button>Add Comment</button>
+              <button>Send SMS</button>
+              <button>Check Eligibility</button>
+              <button>Security Codes</button>
+              <button>Health Insurance</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-note">
+            Demo actions only. No live account, payment, customer, or device changes are performed.
+          </div>
+        </div>
+      </div>
+      <nav class="side-nav">
+        <a href="#view-case-workspace" class="active">Case Workspace</a>
+        <a href="#view-account-context">Account Context</a>
+        <a href="#view-payment-verification">Payment Verification</a>
+        <a href="#view-device-check">Device Check</a>
+        <a href="#view-access-reconciliation">Access Reconciliation</a>
+        <a href="#view-remedial-review">Remedial Review</a>
+        <a href="#view-escalation-trigger">Escalation Trigger</a>
+      </nav>
+      <div class="sidebar-back-wrap">
+        <a href="fintech-project.html" class="payg-back-button">← Back to Fintech Workflow</a>
+      </div>
+    </aside>
+    <section class="focus-panel">
+      <a href="#" class="focus-close">×</a>
+      <section class="workflow-strip">
+        <div class="workflow-step" tabindex="0"><div class="step-top"><span class="step-number">1</span><strong>Account Context</strong><span class="info-dot">i</span></div><div class="tooltip">Check status, balance, collection speed, and “To Get on Track” amount.</div></div>
+        <div class="workflow-step" tabindex="0"><div class="step-top"><span class="step-number">2</span><strong>Payment Verification</strong><span class="info-dot">i</span></div><div class="tooltip">Review latest payment, expand history, and inspect receipt details.</div></div>
+        <div class="workflow-step" tabindex="0"><div class="step-top"><span class="step-number">3</span><strong>Device Check</strong><span class="info-dot">i</span></div><div class="tooltip">Confirm activation, credit timing, and device communication signals.</div></div>
+        <div class="workflow-step" tabindex="0"><div class="step-top"><span class="step-number">4</span><strong>Access State</strong><span class="info-dot">i</span></div><div class="tooltip">Compare expected access state against actual access state.</div></div>
+        <div class="workflow-step" tabindex="0"><div class="step-top"><span class="step-number">5</span><strong>Remedial Review</strong><span class="info-dot">i</span></div><div class="tooltip">Review refresh, transfer, refund, or direct resolution options.</div></div>
+        <div class="workflow-step" tabindex="0"><div class="step-top"><span class="step-number">6</span><strong>Escalation Trigger</strong><span class="info-dot">i</span></div><div class="tooltip">Escalate persistent access, receipt, allocation, or technical issues.</div></div>
+      </section>
+    </section>
+  </div>
+
+  <div id="view-account-context" class="focus-overlay">
+    <a href="#" class="focus-backdrop"></a>
+    <aside class="focus-sidebar">
+      <div class="brand-with-actions">
+        <input type="checkbox" id="focus-menu-toggle-2" class="sidebar-menu-toggle">
+
+        <div class="brand">
+          <label for="focus-menu-toggle-2" class="brand-mark action-brand-mark" title="Open quick action menu">O</label>
+          <div class="brand-text">
+            <strong>OpsFlow</strong>
+            <span>PAYG Review Demo</span>
+          </div>
+        </div>
+
+        <div class="sidebar-action-menu">
+          <label for="focus-menu-toggle-2" class="sidebar-action-close">×</label>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Devices</div>
+            <div class="quick-menu-grid">
+              <button>Send Credit</button>
+              <button>Send State</button>
+              <button>Direct Swap</button>
+              <button>Mark for return</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Account</div>
+            <div class="quick-menu-grid">
+              <button>Update Info</button>
+              <button>Update Custom Fields</button>
+              <button>Add Product</button>
+              <button>Free Usage</button>
+              <button>Suspend AC</button>
+              <button>Block AC</button>
+              <button>Sell Add-on</button>
+              <button>More Info</button>
+              <button>Sign up Info</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Customer</div>
+            <div class="quick-menu-grid">
+              <button>Add Comment</button>
+              <button>Send SMS</button>
+              <button>Check Eligibility</button>
+              <button>Security Codes</button>
+              <button>Health Insurance</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-note">
+            Demo actions only. No live account, payment, customer, or device changes are performed.
+          </div>
+        </div>
+      </div>
+      <nav class="side-nav">
+        <a href="#view-case-workspace">Case Workspace</a><a href="#view-account-context" class="active">Account Context</a><a href="#view-payment-verification">Payment Verification</a><a href="#view-device-check">Device Check</a><a href="#view-access-reconciliation">Access Reconciliation</a><a href="#view-remedial-review">Remedial Review</a><a href="#view-escalation-trigger">Escalation Trigger</a>
+      </nav>
+      <div class="sidebar-back-wrap">
+        <a href="fintech-project.html" class="payg-back-button">← Back to Fintech Workflow</a>
+      </div>
+    </aside>
+    <section class="focus-panel">
+      <a href="#" class="focus-close">×</a>
+      <section class="card"><div class="card-header"><div><h3>Account Context</h3><p>Account standing and payment readiness signals</p></div><span class="pill warning">Not Verified</span></div><div class="card-body"><div class="data-grid"><div class="field"><span>Account Status</span><strong class="good">Active</strong></div><div class="field"><span>Total Financing</span><strong>GHS 3,300.00</strong></div><div class="field"><span>Amount Paid</span><strong>GHS 620.00 (19.0%)</strong></div><div class="field"><span>Outstanding</span><strong>GHS 2,680.00</strong></div><div class="field"><span>Available Balance</span><strong class="warning">GHS 18.40</strong></div><div class="field"><span>Collection Speed</span><strong class="good">117.0%</strong></div><div class="field"><span>To Get On Track</span><strong class="good">GHS 0.00</strong></div><div class="field"><span>Reference Code</span><strong>ACC-000001-2</strong></div></div><div class="note">Support note: customer reports payment is reflected, but access status still needs verification.</div></div></section>
+    </section>
+  </div>
+
+  <div id="view-payment-verification" class="focus-overlay">
+    <a href="#" class="focus-backdrop"></a>
+    <aside class="focus-sidebar">
+      <div class="brand-with-actions">
+        <input type="checkbox" id="focus-menu-toggle-3" class="sidebar-menu-toggle">
+
+        <div class="brand">
+          <label for="focus-menu-toggle-3" class="brand-mark action-brand-mark" title="Open quick action menu">O</label>
+          <div class="brand-text">
+            <strong>OpsFlow</strong>
+            <span>PAYG Review Demo</span>
+          </div>
+        </div>
+
+        <div class="sidebar-action-menu">
+          <label for="focus-menu-toggle-3" class="sidebar-action-close">×</label>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Devices</div>
+            <div class="quick-menu-grid">
+              <button>Send Credit</button>
+              <button>Send State</button>
+              <button>Direct Swap</button>
+              <button>Mark for return</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Account</div>
+            <div class="quick-menu-grid">
+              <button>Update Info</button>
+              <button>Update Custom Fields</button>
+              <button>Add Product</button>
+              <button>Free Usage</button>
+              <button>Suspend AC</button>
+              <button>Block AC</button>
+              <button>Sell Add-on</button>
+              <button>More Info</button>
+              <button>Sign up Info</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Customer</div>
+            <div class="quick-menu-grid">
+              <button>Add Comment</button>
+              <button>Send SMS</button>
+              <button>Check Eligibility</button>
+              <button>Security Codes</button>
+              <button>Health Insurance</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-note">
+            Demo actions only. No live account, payment, customer, or device changes are performed.
+          </div>
+        </div>
+      </div>
+      <nav class="side-nav">
+        <a href="#view-case-workspace">Case Workspace</a><a href="#view-account-context">Account Context</a><a href="#view-payment-verification" class="active">Payment Verification</a><a href="#view-device-check">Device Check</a><a href="#view-access-reconciliation">Access Reconciliation</a><a href="#view-remedial-review">Remedial Review</a><a href="#view-escalation-trigger">Escalation Trigger</a>
+      </nav>
+      <div class="sidebar-back-wrap">
+        <a href="fintech-project.html" class="payg-back-button">← Back to Fintech Workflow</a>
+      </div>
+    </aside>
+    <section class="focus-panel">
+      <a href="#" class="focus-close">×</a>
+      <section class="card">
+        <div class="card-header"><div><h3>Payment Verification</h3><p>Latest payment, history expansion, and receipt inspection</p></div></div>
+        <div class="card-body">
+          <input type="checkbox" id="focus-payment-toggle" class="payment-toggle">
+          <div class="payment-row">
+            <div class="data-grid"><div class="field"><span>Amount</span><strong>GHS 15.20</strong></div><div class="field"><span>Date Received</span><strong>2026-05-27 03:55:33</strong></div><div class="field"><span>Receipt</span><strong>SAMPLE-820938</strong></div><div class="field"><span>Paid By</span><strong>0000000000</strong></div></div>
+            <label for="focus-payment-toggle" class="expand-button" title="Expand payment history">↗</label>
+          </div>
+          <div class="payment-table-wrap"><label for="focus-payment-toggle" class="table-close">×</label><table><thead><tr><th>Date Created</th><th>Payment Phone</th><th>Paid By</th><th>Amount</th><th>Receipt Number</th></tr></thead><tbody><tr><td>2026-05-27<br>03:55:33</td><td>0000000000</td><td>0000000000</td><td>15.2</td><td><a href="#payment-modal">SAMPLE-820938</a></td></tr><tr><td>2026-05-26<br>16:05:07</td><td>0000000000</td><td>0000000000</td><td>16</td><td><a href="#payment-modal">SAMPLE-315498</a></td></tr><tr><td>2026-05-24<br>14:24:02</td><td>0000000000</td><td>0000000000</td><td>32</td><td><a href="#payment-modal">SAMPLE-819302</a></td></tr></tbody></table></div>
+        </div>
+      </section>
+    </section>
+  </div>
+
+  <div id="view-device-check" class="focus-overlay">
+    <a href="#" class="focus-backdrop"></a>
+    <aside class="focus-sidebar">
+      <div class="brand-with-actions">
+        <input type="checkbox" id="focus-menu-toggle-4" class="sidebar-menu-toggle">
+
+        <div class="brand">
+          <label for="focus-menu-toggle-4" class="brand-mark action-brand-mark" title="Open quick action menu">O</label>
+          <div class="brand-text">
+            <strong>OpsFlow</strong>
+            <span>PAYG Review Demo</span>
+          </div>
+        </div>
+
+        <div class="sidebar-action-menu">
+          <label for="focus-menu-toggle-4" class="sidebar-action-close">×</label>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Devices</div>
+            <div class="quick-menu-grid">
+              <button>Send Credit</button>
+              <button>Send State</button>
+              <button>Direct Swap</button>
+              <button>Mark for return</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Account</div>
+            <div class="quick-menu-grid">
+              <button>Update Info</button>
+              <button>Update Custom Fields</button>
+              <button>Add Product</button>
+              <button>Free Usage</button>
+              <button>Suspend AC</button>
+              <button>Block AC</button>
+              <button>Sell Add-on</button>
+              <button>More Info</button>
+              <button>Sign up Info</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Customer</div>
+            <div class="quick-menu-grid">
+              <button>Add Comment</button>
+              <button>Send SMS</button>
+              <button>Check Eligibility</button>
+              <button>Security Codes</button>
+              <button>Health Insurance</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-note">
+            Demo actions only. No live account, payment, customer, or device changes are performed.
+          </div>
+        </div>
+      </div>
+      <nav class="side-nav"><a href="#view-case-workspace">Case Workspace</a><a href="#view-account-context">Account Context</a><a href="#view-payment-verification">Payment Verification</a><a href="#view-device-check" class="active">Device Check</a><a href="#view-access-reconciliation">Access Reconciliation</a><a href="#view-remedial-review">Remedial Review</a><a href="#view-escalation-trigger">Escalation Trigger</a></nav>
+    </aside>
+    <section class="focus-panel"><a href="#" class="focus-close">×</a><section class="card"><div class="card-header"><div><h3>Device & Communication Check</h3><p>Activation, credit timing, and communication signals</p></div></div><div class="card-body"><div class="data-grid"><div class="field"><span>Device Record</span><strong>Demo PAYG Device 001</strong></div><div class="field"><span>Communication State</span><strong class="good">Activated</strong></div><div class="field"><span>Last Credits Sent</span><strong>1</strong></div><div class="field"><span>Credit Sent Date</span><strong>27/05/2026 03:55:35</strong></div><div class="field"><span>Device IMEI</span><strong>IMEI-000000000000</strong></div><div class="field"><span>Tamper Alert Review</span><strong class="good">No active alert shown</strong></div></div></div></section></section>
+  </div>
+
+  <div id="view-access-reconciliation" class="focus-overlay">
+    <a href="#" class="focus-backdrop"></a>
+    <aside class="focus-sidebar">
+      <div class="brand-with-actions">
+        <input type="checkbox" id="focus-menu-toggle-5" class="sidebar-menu-toggle">
+
+        <div class="brand">
+          <label for="focus-menu-toggle-5" class="brand-mark action-brand-mark" title="Open quick action menu">O</label>
+          <div class="brand-text">
+            <strong>OpsFlow</strong>
+            <span>PAYG Review Demo</span>
+          </div>
+        </div>
+
+        <div class="sidebar-action-menu">
+          <label for="focus-menu-toggle-5" class="sidebar-action-close">×</label>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Devices</div>
+            <div class="quick-menu-grid">
+              <button>Send Credit</button>
+              <button>Send State</button>
+              <button>Direct Swap</button>
+              <button>Mark for return</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Account</div>
+            <div class="quick-menu-grid">
+              <button>Update Info</button>
+              <button>Update Custom Fields</button>
+              <button>Add Product</button>
+              <button>Free Usage</button>
+              <button>Suspend AC</button>
+              <button>Block AC</button>
+              <button>Sell Add-on</button>
+              <button>More Info</button>
+              <button>Sign up Info</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Customer</div>
+            <div class="quick-menu-grid">
+              <button>Add Comment</button>
+              <button>Send SMS</button>
+              <button>Check Eligibility</button>
+              <button>Security Codes</button>
+              <button>Health Insurance</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-note">
+            Demo actions only. No live account, payment, customer, or device changes are performed.
+          </div>
+        </div>
+      </div>
+      <nav class="side-nav"><a href="#view-case-workspace">Case Workspace</a><a href="#view-account-context">Account Context</a><a href="#view-payment-verification">Payment Verification</a><a href="#view-device-check">Device Check</a><a href="#view-access-reconciliation" class="active">Access Reconciliation</a><a href="#view-remedial-review">Remedial Review</a><a href="#view-escalation-trigger">Escalation Trigger</a></nav>
+    </aside>
+    <section class="focus-panel"><a href="#" class="focus-close">×</a><section class="card"><div class="card-header"><div><h3>Access State Reconciliation</h3><p>Expected access compared with actual access</p></div></div><div class="card-body status-list"><div class="status-row"><strong>Enrollment State</strong><span>Enrolled</span></div><div class="status-row"><strong>Expected State</strong><span>Unlocked</span></div><div class="status-row"><strong>Actual State</strong><span>Locked</span></div><div class="status-row"><strong>Last System Check</strong><span>27 May 2026 15:01</span></div><div class="action-box">Access state matches expected condition. If customer still reports restriction, refresh account status and review device communication context.</div></div></section></section>
+  </div>
+
+  <div id="view-remedial-review" class="focus-overlay">
+    <a href="#" class="focus-backdrop"></a>
+    <aside class="focus-sidebar">
+      <div class="brand-with-actions">
+        <input type="checkbox" id="focus-menu-toggle-6" class="sidebar-menu-toggle">
+
+        <div class="brand">
+          <label for="focus-menu-toggle-6" class="brand-mark action-brand-mark" title="Open quick action menu">O</label>
+          <div class="brand-text">
+            <strong>OpsFlow</strong>
+            <span>PAYG Review Demo</span>
+          </div>
+        </div>
+
+        <div class="sidebar-action-menu">
+          <label for="focus-menu-toggle-6" class="sidebar-action-close">×</label>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Devices</div>
+            <div class="quick-menu-grid">
+              <button>Send Credit</button>
+              <button>Send State</button>
+              <button>Direct Swap</button>
+              <button>Mark for return</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Account</div>
+            <div class="quick-menu-grid">
+              <button>Update Info</button>
+              <button>Update Custom Fields</button>
+              <button>Add Product</button>
+              <button>Free Usage</button>
+              <button>Suspend AC</button>
+              <button>Block AC</button>
+              <button>Sell Add-on</button>
+              <button>More Info</button>
+              <button>Sign up Info</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Customer</div>
+            <div class="quick-menu-grid">
+              <button>Add Comment</button>
+              <button>Send SMS</button>
+              <button>Check Eligibility</button>
+              <button>Security Codes</button>
+              <button>Health Insurance</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-note">
+            Demo actions only. No live account, payment, customer, or device changes are performed.
+          </div>
+        </div>
+      </div>
+      <nav class="side-nav"><a href="#view-case-workspace">Case Workspace</a><a href="#view-account-context">Account Context</a><a href="#view-payment-verification">Payment Verification</a><a href="#view-device-check">Device Check</a><a href="#view-access-reconciliation">Access Reconciliation</a><a href="#view-remedial-review" class="active">Remedial Review</a><a href="#view-escalation-trigger">Escalation Trigger</a></nav>
+    </aside>
+    <section class="focus-panel"><a href="#" class="focus-close">×</a><section class="card"><div class="card-header"><div><h3>Remedial Review</h3><p>Refresh, transfer, refund, or direct resolution options</p></div></div><div class="card-body"><div class="data-grid"><div class="field"><span>Account Refresh</span><strong>Sync available credits</strong></div><div class="field"><span>Transfer Review</span><strong><a href="#payment-modal">Open transfer context</a></strong></div><div class="field"><span>Refund Review</span><strong><a href="#payment-modal-refund">Open refund form</a></strong></div><div class="field"><span>Direct Resolution</span><strong>Notify customer access is correct</strong></div></div></div></section></section>
+  </div>
+
+  <div id="view-escalation-trigger" class="focus-overlay">
+    <a href="#" class="focus-backdrop"></a>
+    <aside class="focus-sidebar">
+      <div class="brand-with-actions">
+        <input type="checkbox" id="focus-menu-toggle-7" class="sidebar-menu-toggle">
+
+        <div class="brand">
+          <label for="focus-menu-toggle-7" class="brand-mark action-brand-mark" title="Open quick action menu">O</label>
+          <div class="brand-text">
+            <strong>OpsFlow</strong>
+            <span>PAYG Review Demo</span>
+          </div>
+        </div>
+
+        <div class="sidebar-action-menu">
+          <label for="focus-menu-toggle-7" class="sidebar-action-close">×</label>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Devices</div>
+            <div class="quick-menu-grid">
+              <button>Send Credit</button>
+              <button>Send State</button>
+              <button>Direct Swap</button>
+              <button>Mark for return</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Account</div>
+            <div class="quick-menu-grid">
+              <button>Update Info</button>
+              <button>Update Custom Fields</button>
+              <button>Add Product</button>
+              <button>Free Usage</button>
+              <button>Suspend AC</button>
+              <button>Block AC</button>
+              <button>Sell Add-on</button>
+              <button>More Info</button>
+              <button>Sign up Info</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-group">
+            <div class="quick-menu-title">Customer</div>
+            <div class="quick-menu-grid">
+              <button>Add Comment</button>
+              <button>Send SMS</button>
+              <button>Check Eligibility</button>
+              <button>Security Codes</button>
+              <button>Health Insurance</button>
+            </div>
+          </div>
+
+          <div class="quick-menu-note">
+            Demo actions only. No live account, payment, customer, or device changes are performed.
+          </div>
+        </div>
+      </div>
+      <nav class="side-nav"><a href="#view-case-workspace">Case Workspace</a><a href="#view-account-context">Account Context</a><a href="#view-payment-verification">Payment Verification</a><a href="#view-device-check">Device Check</a><a href="#view-access-reconciliation">Access Reconciliation</a><a href="#view-remedial-review">Remedial Review</a><a href="#view-escalation-trigger" class="active">Escalation Trigger</a></nav>
+    </aside>
+    <section class="focus-panel"><a href="#" class="focus-close">×</a><section class="card"><div class="card-header"><div><h3>Escalation Trigger</h3><p>When the case should move beyond direct support</p></div></div><div class="card-body"><div class="action-box">Escalate only if there is persistent access mismatch, unclear receipt status, payment allocation issue, or technical condition that cannot be resolved after verification.</div><div class="note">Escalation context should include account status, payment receipt, payment timestamp, access state, device communication signal, and customer report.</div></div></section></section>
+  </div>
+
+  <div id="payment-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header"><span>Payment Review Details</span><a href="#">×</a></div>
+      <div class="modal-body">
+        <div class="modal-section"><h4>Payment Details</h4><div class="modal-grid"><div class="field"><span>Paid By</span><strong>0000000000</strong></div><div class="field"><span>Payment Phone</span><strong>0000000000</strong></div><div class="field"><span>Status</span><strong>NotTransferred</strong></div><div class="field"><span>Amount</span><strong>GHS 15.20</strong></div><div class="field"><span>Account Number</span><strong>ACC-000001-2</strong></div><div class="field"><span>Receipt Number</span><strong>SAMPLE-820938</strong></div><div class="field"><span>Date Created</span><strong>2026-05-27 03:55:33</strong></div><div class="field"><span>Payment Date</span><strong>2026-05-27 03:55:10</strong></div></div></div>
+        <div class="modal-section"><h4>Linked Account Item</h4><div class="modal-grid"><div class="field"><span>Account Item Number</span><strong>ACC-000001-2</strong></div><div class="field"><span>Item Type</span><strong>Financing Account</strong></div><div class="field"><span>Amount Applied</span><strong>GHS 15.20</strong></div><div class="field"><span>Description</span><strong>Payment matched to the account using the reference provided.</strong></div></div></div>
+        <div class="modal-actions"><a href="#payment-modal-refund" class="modal-btn">Review Refund</a><button class="modal-btn secondary">Review Transfer</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="payment-modal-refund" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header"><span>Refund Review</span><a href="#">×</a></div>
+      <div class="modal-body">
+        <div class="modal-section"><h4>Refund Context</h4><div class="modal-grid"><div class="field"><span>Receipt Number</span><strong>SAMPLE-820938</strong></div><div class="field"><span>Maximum Review Amount</span><strong>GHS 15.20</strong></div><div class="field"><span>Account Number</span><strong>ACC-000001-2</strong></div><div class="field"><span>Payment Status</span><strong>NotTransferred</strong></div></div></div>
+        <div class="refund-form"><label>Max Amount</label><strong>GHS 15.20</strong><label>Amount</label><input type="text" value="GHS 0.00"><label>Review Notes</label><textarea></textarea><button class="submit-btn">Submit Review</button></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

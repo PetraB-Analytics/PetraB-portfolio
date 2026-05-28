@@ -864,3 +864,132 @@ a {
     justify-content: center;
   }
 }
+
+/* EXECUTION PROOF: UPDATED THREE-CARD LAYOUT */
+.three-proof-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.three-proof-grid .ticket-card,
+.three-proof-grid .video-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.mock-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.mock-preview-box {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.mock-preview-top {
+  height: 34px;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 12px;
+}
+
+.mock-preview-top span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.mock-preview-content {
+  padding: 16px;
+}
+
+.mock-line {
+  height: 10px;
+  width: 65%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  margin-bottom: 10px;
+}
+
+.mock-line.wide {
+  width: 88%;
+}
+
+.mock-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.mock-grid div {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.mock-grid strong {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 5px;
+}
+
+.mock-grid p {
+  margin: 0;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.mock-note {
+  background: rgba(100, 255, 218, 0.1);
+  border: 1px solid rgba(100, 255, 218, 0.22);
+  color: rgba(255, 255, 255, 0.86);
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.mock-description {
+  margin: 14px 0 18px;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.6;
+  font-size: 0.72rem;
+}
+
+.mock-button {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f7b6b2, #f2a6a6);
+  color: #10213f;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 8px 18px rgba(242, 166, 166, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mock-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(242, 166, 166, 0.32);
+}
+
+@media (max-width: 1180px) {
+  .three-proof-grid {
+    grid-template-columns: 1fr;
+  }
+}

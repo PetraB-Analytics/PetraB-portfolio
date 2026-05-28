@@ -271,35 +271,85 @@
       <span class="section-icon yellow"><i class="bi bi-check2-square"></i></span>
       <div>
         <h2>Execution Proof</h2>
-        <p>How the workflow is documented and demonstrated in practice.</p>
+        <p>How the workflow is documented, reviewed, and demonstrated in practice.</p>
       </div>
     </div>
 
-    <div class="proof-grid">
+    <div class="proof-grid three-proof-grid">
+
+      <!-- Sample Ticket Note -->
       <article class="ticket-card">
         <h3><i class="bi bi-file-text-fill"></i> Sample Ticket Note</h3>
+
         <div class="ticket-box">
           <div class="ticket-row">
             <strong>Issue Type</strong>
-            <p>Payment reflected but device still locked.</p>
+            <p>Payment reflected, but device remained locked.</p>
           </div>
+
           <div class="ticket-row">
             <strong>Checks Completed</strong>
-            <p>Payment status, balance, device/access status, and previous ticket reviewed.</p>
+            <p>Payment record, receipt, account balance, collection status, and access state reviewed.</p>
           </div>
+
           <div class="ticket-row">
             <strong>Action Taken</strong>
-            <p>Customer guided through approved troubleshooting steps.</p>
+            <p>Technical troubleshooting completed directly with the customer.</p>
           </div>
+
           <div class="ticket-row">
             <strong>Outcome</strong>
-            <p>Resolved or escalated with full context for review.</p>
+            <p>Account/device status refreshed and issue resolved without escalation.</p>
           </div>
         </div>
       </article>
 
+      <!-- PAYG Account Review Mock -->
+      <article class="ticket-card mock-card">
+        <h3><i class="bi bi-window-sidebar"></i> PAYG Account Review Mock</h3>
+
+        <div class="mock-preview-box">
+          <div class="mock-preview-top">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <div class="mock-preview-content">
+            <div class="mock-line wide"></div>
+            <div class="mock-line"></div>
+
+            <div class="mock-grid">
+              <div>
+                <strong>Expected State</strong>
+                <p>Unlocked</p>
+              </div>
+              <div>
+                <strong>Actual State</strong>
+                <p>Locked</p>
+              </div>
+            </div>
+
+            <div class="mock-note">
+              Access mismatch reviewed and resolved through account/device troubleshooting.
+            </div>
+          </div>
+        </div>
+
+        <p class="mock-description">
+          A privacy-safe mock interface showing how I review payment status, account balance,
+          access state, device communication, and troubleshooting steps during a locked-device support case.
+        </p>
+
+        <a href="PAYGmock.html" class="mock-button">
+          Open PAYG Mock <i class="bi bi-arrow-right"></i>
+        </a>
+      </article>
+
+      <!-- Workflow Walkthrough Video -->
       <article class="video-card">
         <h3><i class="bi bi-play-circle"></i> Workflow Walkthrough Video</h3>
+
         <div class="video-box">
           <div class="video-flow">
             <span><i class="bi bi-chat-left-text"></i></span>
@@ -310,15 +360,19 @@
             <i class="bi bi-arrow-right"></i>
             <span><i class="bi bi-clipboard-check"></i></span>
           </div>
+
           <button class="play-button" type="button" onclick="alert('🎬 Walkthrough demo: Ticket → Diagnosis → Resolution → Documentation')">
             <i class="bi bi-play-fill"></i>
           </button>
+
           <p>Ticket → Diagnosis → Resolution → Documentation</p>
         </div>
+
         <a href="#" class="video-link" onclick="alert('Full walkthrough video coming soon'); return false;">
           Watch Workflow Walkthrough <i class="bi bi-arrow-right"></i>
         </a>
       </article>
+
     </div>
   </section>
 
